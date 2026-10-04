@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NovaPlay — Streams de videojuegos y charlas</title>
-<meta name="description" content="Canal de streaming: ranked, charlas y maratones. Entérate de los horarios, ve los mejores clips y colabora.">
+<title>Agente X — Streams de ranked, charlas y maratones</title>
+<meta name="description" content="Directos de Valorant, Minecraft y charlas. Revisa los horarios, mira los mejores clips y descubre cómo auspiciar el canal.">
 
 <style>
 /* ============================================================
@@ -280,7 +280,7 @@ ul{list-style:none}
 <!-- ================= CABECERA ================= -->
 <header class="cabecera">
   <div class="contenedor">
-    <a class="logo" href="#inicio">Nova<span>Play</span></a>
+    <a class="logo" href="#inicio">Agente<span> X</span></a>
     <button class="boton-menu" id="botonMenu" aria-label="Menú">☰</button>
     <nav class="nav" id="nav">
       <a href="#inicio">Inicio</a>
@@ -295,8 +295,8 @@ ul{list-style:none}
 <!-- ================= HERO ================= -->
 <section class="hero" id="inicio">
   <span class="insignia-vivo"><span class="punto"></span> EN VIVO AHORA</span>
-  <h1>NovaPlay</h1>
-  <p>Streams de ranked, charlas relajadas y maratones de fin de semana. Únete a la comunidad.</p>
+  <h1>Agente X</h1>
+  <p>Ranked de Valorant, mundos de Minecraft y charlas sin filtro. Directos de martes a domingo.</p>
   <a class="btn btn-violeta" href="#clips">▶ Ver clips</a>
   <a class="btn btn-linea" href="#horario">Próximos directos</a>
 </section>
@@ -311,11 +311,14 @@ ul{list-style:none}
 
 <!-- ================= STATS ================= -->
 <section class="seccion">
-  <div class="contenedor rejilla-stats">
-    <div class="stat revelar"><div class="numero" data-objetivo="15400">0</div><div class="etiqueta">Seguidores</div></div>
-    <div class="stat revelar"><div class="numero" data-objetivo="320">0</div><div class="etiqueta">Horas en vivo</div></div>
-    <div class="stat revelar"><div class="numero" data-objetivo="96">0</div><div class="etiqueta">Clips destacados</div></div>
-    <div class="stat revelar"><div class="numero" data-objetivo="48">0</div><div class="etiqueta">Streams al mes</div></div>
+  <div class="contenedor">
+    <div class="rejilla-stats">
+      <div class="stat revelar"><div class="numero" data-objetivo="12400">0</div><div class="etiqueta">Seguidores · ejemplo</div></div>
+      <div class="stat revelar"><div class="numero" data-objetivo="320">0</div><div class="etiqueta">Horas en vivo · ejemplo</div></div>
+      <div class="stat revelar"><div class="numero" data-objetivo="96">0</div><div class="etiqueta">Clips destacados · ejemplo</div></div>
+      <div class="stat revelar"><div class="numero" data-objetivo="20">0</div><div class="etiqueta">Streams al mes · ejemplo</div></div>
+    </div>
+    <p style="text-align:center;margin-top:20px;font-size:13px;color:var(--texto-medio)">Métricas de ejemplo para esta demostración.</p>
   </div>
 </section>
 
@@ -325,7 +328,7 @@ ul{list-style:none}
     <div class="encabezado-seccion">
       <p class="sobre-linea">Lo mejor de la semana</p>
       <h2>Clips destacados</h2>
-      <p>Filtra por juego para encontrar tus momentos favoritos.</p>
+      <p>Filtra por juego y revisa los momentos que marcaron la semana.</p>
     </div>
     <div class="pestanas" id="pestanas">
       <button class="pestana activa" data-filtro="todos">Todos</button>
@@ -336,19 +339,19 @@ ul{list-style:none}
     <div class="rejilla-clips">
       <article class="clip revelar" data-juego="valorant">
         <div class="miniatura">🎯</div>
-        <div class="cuerpo"><h3>Clutch 1v4 en ranked</h3><p>Valorant · 12 mil vistas</p></div>
+        <div class="cuerpo"><h3>Remontada 1v4 en Ascent</h3><p>Valorant · 12 mil vistas</p></div>
       </article>
       <article class="clip revelar" data-juego="minecraft">
         <div class="miniatura">⛏️</div>
-        <div class="cuerpo"><h3>Construcción épica en supervivencia</h3><p>Minecraft · 8 mil vistas</p></div>
+        <div class="cuerpo"><h3>Base subterránea en supervivencia</h3><p>Minecraft · 8 mil vistas</p></div>
       </article>
       <article class="clip revelar" data-juego="charlas">
         <div class="miniatura">💬</div>
-        <div class="cuerpo"><h3>Charlando con la comunidad</h3><p>Just Chatting · 5 mil vistas</p></div>
+        <div class="cuerpo"><h3>Preguntas de la comunidad en vivo</h3><p>Just Chatting · 5 mil vistas</p></div>
       </article>
       <article class="clip revelar" data-juego="valorant">
         <div class="miniatura">🔥</div>
-        <div class="cuerpo"><h3>Ace en partida competitiva</h3><p>Valorant · 21 mil vistas</p></div>
+        <div class="cuerpo"><h3>Ace con Operator en Icebox</h3><p>Valorant · 21 mil vistas</p></div>
       </article>
     </div>
   </div>
@@ -361,9 +364,10 @@ ul{list-style:none}
       <p class="sobre-linea">Último directo</p>
       <h2>Revívelo completo</h2>
     </div>
-    <!-- Cambias el src por el video que quieras -->
+    <!-- Trailer oficial de VALORANT (Riot Games) como video de ejemplo.
+         Cámbialo por el embed del último directo real cuando lo tengas. -->
     <div class="video-marco">
-      <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Último stream" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/e_E9W2vsRbQ" title="Trailer oficial de VALORANT" allowfullscreen></iframe>
     </div>
   </div>
 </section>
@@ -375,6 +379,7 @@ ul{list-style:none}
       <div class="encabezado-seccion">
         <p class="sobre-linea">Cuándo conectarse</p>
         <h2>Horario semanal</h2>
+        <p style="color:var(--texto-medio);font-size:14px;margin-bottom:14px">Horario de ejemplo.</p>
       </div>
       <ul class="horario">
         <li><strong>Lunes</strong><span>Descanso</span></li>
@@ -405,7 +410,12 @@ ul{list-style:none}
     <div class="encabezado-seccion">
       <p class="sobre-linea">Colabora con el canal</p>
       <h2>¿Quieres ser sponsor?</h2>
-      <p>Escríbeme y armamos una colaboración.</p>
+      <p>Elige un plan y llega a una comunidad activa de jugadores. Las menciones se leen en vivo, dentro del stream.</p>
+      <ul style="margin:0 0 22px;display:grid;gap:10px;max-width:640px">
+        <li style="background:var(--tarjeta);border:1px solid var(--borde);border-radius:10px;padding:14px 16px"><strong>Plan Básico</strong> — mención con tu logo en el overlay del stream.</li>
+        <li style="background:var(--tarjeta);border:1px solid var(--borde);border-radius:10px;padding:14px 16px"><strong>Plan Medio</strong> — lo anterior + bloque de 15 segundos leyendo tu marca.</li>
+        <li style="background:var(--tarjeta);border:1px solid var(--borde);border-radius:10px;padding:14px 16px"><strong>Plan Full</strong> — presencia destacada, cápsula de video y redes sociales.</li>
+      </ul>
     </div>
     <form class="formulario" id="formulario" novalidate>
       <div class="mensaje-enviado" id="mensajeEnviado">¡Gracias! Te responderé pronto. ✅</div>
@@ -417,10 +427,11 @@ ul{list-style:none}
   </div>
 </section>
 
-<a class="whatsapp-flotante" href="https://wa.me/56912345678" aria-label="WhatsApp">💬</a>
+<!-- Contacto flotante de ejemplo: Discord ficticio para la demo -->
+<a class="whatsapp-flotante" href="https://discord.gg/ejemplo" aria-label="Discord" title="Únete al Discord (ejemplo)">💬</a>
 
 <footer class="pie">
-  <div class="contenedor">© 2026 NovaPlay · Hecho con 💜 por la comunidad · <a href="#inicio">Volver arriba</a></div>
+  <div class="contenedor">© 2026 Agente X · Sitio de demostración creado por JC.Carvajal.Dev · <a href="#inicio">Volver arriba</a></div>
 </footer>
 
 <script>
@@ -444,9 +455,9 @@ const toggleTema = document.getElementById('toggleTema');
 function aplicarTema(claro){
   document.body.classList.toggle('claro', claro);
   toggleTema.textContent = claro ? '🌙 Modo oscuro' : '☀️ Modo claro';
-  localStorage.setItem('tema-novaplay', claro ? 'claro' : 'oscuro');
+  localStorage.setItem('tema-agentex', claro ? 'claro' : 'oscuro');
 }
-if (localStorage.getItem('tema-novaplay') === 'claro') aplicarTema(true);
+if (localStorage.getItem('tema-agentex') === 'claro') aplicarTema(true);
 if (toggleTema) toggleTema.addEventListener('click', () => {
   aplicarTema(!document.body.classList.contains('claro'));
 });
