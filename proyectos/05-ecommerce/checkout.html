@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finalizar compra — Sendero</title>
+<style>
+:root{
+  --bosque:#1d3a2f; --naranja:#e8590c; --arena:#f4f1ec;
+  --gris:#5c6773; --texto:#1a1f26; --blanco:#fff;
+  --rojo:#e03131; --verde:#2f9e44; --radio:10px; --max:1200px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:var(--texto);line-height:1.6;background:var(--arena)}
+a{color:inherit;text-decoration:none}ul{list-style:none}button{font-family:inherit}
+.contenedor{width:100%;max-width:var(--max);margin:0 auto;padding:0 20px}
+.cabecera{background:var(--blanco);border-bottom:1px solid #e8e4de;position:sticky;top:0;z-index:100}
+.cabecera .contenedor{display:flex;align-items:center;justify-content:space-between;min-height:72px}
+.marca{font-size:22px;font-weight:800;letter-spacing:1px;color:var(--bosque)}
+.marca span{color:var(--naranja)}
+.pasos{display:flex;gap:22px;align-items:center}
+.paso{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--gris)}
+.paso .circulo{width:25px;height:25px;border-radius:50%;background:#e4e7eb;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:700}
+.paso.activo .circulo{background:var(--bosque)}
+.paso.activo{color:var(--bosque);font-weight:600}
+.paso.hecho .circulo{background:var(--verde)}
+
+/* ---------- AVISO IMPORTANTE ---------- */
+.advertencia{
+  background:#fff4e6;border:2px solid #ffa94d;border-radius:var(--radio);
+  padding:16px 20px;margin:22px 0;font-size:14.5px;color:#7a4a00;
+}
+.advertencia strong{display:block;margin-bottom:5px;font-size:15.5px}
+
+.marco{max-width:1000px;margin:0 auto;padding:0 20px 70px}
+.layout{display:grid;grid-template-columns:1fr 340px;gap:32px;align-items:start}
+.paso-form{background:#fff;border-radius:var(--radio);padding:28px;margin-bottom:18px}
+.paso-form h2{font-size:19px;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.paso-form h2 .num{width:27px;height:27px;border-radius:50%;background:var(--bosque);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13.5px;font-weight:700;flex-shrink:0}
+
+.campo{margin-bottom:17px}
+.campo label{display:block;font-size:14px;font-weight:600;margin-bottom:6px}
+.requerido{color:var(--rojo)}
+.campo input,.campo select{width:100%;padding:12px 14px;border:1.5px solid #dcd7d0;border-radius:8px;font-size:15.5px;font-family:inherit;transition:border-color .2s;background:#fff}
+.campo input:focus,.campo select:focus{outline:none;border-color:var(--bosque)}
+.campo .error{color:var(--rojo);font-size:13.5px;margin-top:5px;display:none}
+.campo.mal input{border-color:var(--rojo);background:#fff5f5}
+.campo.mal .error{display:block}
+.dos-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+.metodos{display:flex;flex-direction:column;gap:11px}
+.metodo{display:flex;align-items:center;gap:13px;border:1.5px solid #dcd7d0;border-radius:8px;padding:15px 17px;cursor:pointer;transition:all .18s;background:#fff}
+.metodo:hover{border-color:#adb5bd}
+.metodo.activo{border-color:var(--bosque);background:#f2f7f4}
+.metodo input{width:18px;height:18px;accent-color:var(--bosque);cursor:pointer;flex-shrink:0}
+.metodo .txt{flex:1}
+.metodo .txt strong{display:block;font-size:15px;margin-bottom:2px}
+.metodo .txt span{font-size:13.5px;color:var(--gris)}
+.metodo .costo{font-size:14.5px;font-weight:600;color:var(--verde)}
+
+/* ---------- RESUMEN ---------- */
+.resumen{background:#fff;border-radius:var(--radio);padding:24px;position:sticky;top:92px}
+.resumen h2{font-size:17px;margin-bottom:18px}
+.mini-linea{display:flex;justify-content:space-between;padding:8px 0;font-size:14.5px;border-bottom:1px solid #f4f1ec}
+.mini-linea .nombre{display:flex;align-items:center;gap:10px}
+.mini-linea .emoji{font-size:20px}
+.mini-linea .cant{color:var(--gris);font-size:13px}
+.resumen .fila{display:flex;justify-content:space-between;padding:9px 0;font-size:15px}
+.resumen .separador{border-top:1px solid #dcd7d0;margin:12px 0}
+.resumen .total{display:flex;justify-content:space-between;font-size:21px;font-weight:800;color:var(--bosque)}
+.btn-pagar{width:100%;background:var(--naranja);color:#fff;border:none;padding:16px;border-radius:var(--radio);font-size:16px;font-weight:700;cursor:pointer;margin-top:20px}
+.btn-pagar:hover{background:#d14a08}
+.btn-pagar:disabled{background:#adb5bd;cursor:not-allowed}
+.volver{text-align:center;margin-top:14px;font-size:14.5px;color:var(--gris)}
+.volver:hover{color:var(--naranja)}
+.seguridad{text-align:center;font-size:12.5px;color:var(--gris);margin-top:14px}
+
+/* ---------- PANTALLA DE ÉXITO ---------- */
+.exito{display:none;background:#fff;border-radius:var(--radio);padding:52px 40px;text-align:center}
+.exito.visible{display:block}
+.exito .icono{width:88px;height:88px;border-radius:50%;background:#d3f9d8;color:var(--verde);display:flex;align-items:center;justify-content:center;font-size:46px;margin:0 auto 24px}
+.exito h2{font-size:27px;margin-bottom:12px;color:var(--bosque)}
+.exito p{color:var(--gris);margin-bottom:9px}
+.exito .pedido{background:var(--arena);border-radius:8px;padding:20px;margin:24px 0;max-width:420px;margin-inline:auto}
+.exito .pedido .fila{display:flex;justify-content:space-between;padding:8px 0;font-size:15px}
+.btn-vuelta{display:inline-block;background:var(--bosque);color:#fff;padding:14px 32px;border-radius:var(--radio);text-decoration:none;font-weight:600;margin-top:12px}
+
+@media (max-width:900px){.layout{grid-template-columns:1fr}.resumen{position:static;order:-1}}
+@media (max-width:560px){.dos-col{grid-template-columns:1fr}.paso-form{padding:22px 18px}}
+</style>
+</head>
+
+<body>
+
+<header class="cabecera">
+  <div class="contenedor">
+    <div class="marca">SENDER<span>O</span></div>
+    <div class="pasos">
+      <div class="paso hecho"><span class="circulo">✓</span> Carrito</div>
+      <div class="paso activo" id="paso2"><span class="circulo">2</span> Datos</div>
+      <div class="paso" id="paso3"><span class="circulo">3</span> Confirmación</div>
+    </div>
+  </div>
+</header>
+
+<div class="contenedor">
+  <div class="advertencia">
+    <strong>⚠️ Esta es una demostración — no se cobran dinero reales</strong>
+    Ningún dato que escribas se envía a ningún lado, y no se conecta a ninguna pasarela de pago.
+    Todo queda en tu navegador. En una tienda real, esta pantalla conectaría con Webpay de Transbank.
+  </div>
+</div>
+
+<div class="marco">
+  <div class="layout" id="layout">
+    <div>
+      <!-- PASO 1: DATOS PERSONALES -->
+      <section class="paso-form">
+        <h2><span class="num">1</span> Tus datos</h2>
+        <div class="dos-col">
+          <div class="campo">
+            <label for="nombre">Nombre <span class="requerido">*</span></label>
+            <input type="text" id="nombre" placeholder="Juan Pérez">
+            <span class="error">Escribe tu nombre</span>
+          </div>
+          <div class="campo">
+            <label for="apellido">Apellido <span class="requerido">*</span></label>
+            <input type="text" id="apellido" placeholder="Pérez">
+            <span class="error">Escribe tu apellido</span>
+          </div>
+        </div>
+        <div class="dos-col">
+          <div class="campo">
+            <label for="email">Email <span class="requerido">*</span></label>
+            <input type="email" id="email" placeholder="tu@email.cl">
+            <span class="error">Revisa el formato de tu email</span>
+          </div>
+          <div class="campo">
+            <label for="telefono">Teléfono <span class="requerido">*</span></label>
+            <input type="tel" id="telefono" placeholder="+56 9 1234 5678">
+            <span class="error">Formato chileno: +56 9 XXXX XXXX</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- PASO 2: DIRECCIÓN -->
+      <section class="paso-form">
+        <h2><span class="num">2</span> Dirección de entrega</h2>
+        <div class="campo">
+          <label for="direccion">Calle y número <span class="requerido">*</span></label>
+          <input type="text" id="direccion" placeholder="Av. Providencia 1234, Depto 501">
+          <span class="error">Escribe tu dirección</span>
+        </div>
+        <div class="dos-col">
+          <div class="campo">
+            <label for="comuna">Comuna <span class="requerido">*</span></label>
+            <select id="comuna">
+              <option value="">Selecciona...</option>
+              <option>Providencia</option><option>Las Condes</option><option>Vitacura</option>
+              <option>Ñuñoa</option><option>Santiago Centro</option><option>Lo Barnechea</option>
+              <option>La Florida</option><option>Peñalolén</option><option>Maipú</option>
+              <option>Quilicura</option><option>La Reina</option><option>Puente Alto</option>
+            </select>
+            <span class="error">Selecciona tu comuna</span>
+          </div>
+          <div class="campo">
+            <label for="region">Región <span class="requerido">*</span></label>
+            <select id="region">
+              <option value="">Selecciona...</option>
+              <option>Región Metropolitana</option>
+              <option>Región de Valparaíso</option>
+              <option>Región del Maule</option>
+              <option>Región de Biobío</option>
+              <option>Región de La Araucanía</option>
+            </select>
+            <span class="error">Selecciona tu región</span>
+          </div>
+        </div>
+        <div class="campo">
+          <label for="referencia">Referencia (opcional)</label>
+          <input type="text" id="referencia" placeholder="Portón negro, al lado de la farmacia">
+        </div>
+      </section>
+
+      <!-- PASO 3: ENVÍO -->
+      <section class="paso-form">
+        <h2><span class="num">3</span> Método de entrega</h2>
+        <div class="metodos" id="metodos">
+          <label class="metodo activo" data-costo="0" data-metodo="retiro">
+            <input type="radio" name="entrega" value="retiro" checked>
+            <span class="txt"><strong>Retiro en tienda</strong><span>Av. Providencia 1234, Santiago</span></span>
+            <span class="costo">Gratis</span>
+          </label>
+          <label class="metodo" data-costo="5900" data-metodo="estandar">
+            <input type="radio" name="entrega" value="estandar">
+            <span class="txt"><strong>Envío estándar</strong><span>3 a 5 días hábiles</span></span>
+            <span class="costo">$5.900</span>
+          </label>
+          <label class="metodo" data-costo="12900" data-metodo="express">
+            <input type="radio" name="entrega" value="express">
+            <span class="txt"><strong>Envío express</strong><span>24 a 48 horas</span></span>
+            <span class="costo">$12.900</span>
+          </label>
+        </div>
+      </section>
+    </div>
+
+    <!-- RESUMEN -->
+    <aside class="resumen" id="resumen"></aside>
+  </div>
+
+  <!-- PANTALLA DE CONFIRMACIÓN -->
+  <div class="exito" id="exito">
+    <div class="icono">✓</div>
+    <h2>¡Pedido confirmado!</h2>
+    <p>Este es un pedido de demostración, no se cobró nada.</p>
+    <div class="pedido" id="datosPedido"></div>
+    <p style="font-size:14px">En una tienda real, aquí iría el número de pedido y el botón de pago.</p>
+    <a href="index.html" class="btn-vuelta">Volver a la tienda</a>
+  </div>
+</div>
+
+<script src="js-carrito.js"></script>
+
+<script>
+/* ============================================================
+   JAVASCRIPT — EJEMPLO 5, PARTE 4 (checkout)
+   ============================================================
+   Lo nuevo acá: VALIDAR DATOS CHILENOS.
+
+   El RUT chileno tiene un dígito verificador. No es solo
+   "un número": el último dígito se calcula a partir de los
+   anteriores. Esa función (validarRut) es la misma que usan
+   los sitios reales.
+
+   Para calcularlo:
+     1. Se toma el RUT sin el dígito verificador
+     2. Se recorre de derecha a izquierda multiplicando cada
+        dígito por 2,3,4,5,6,7,8,9 (y se vuelve a 2 después del 9)
+     3. Se suman los productos y esa suma se divide por 11
+     4. 11 - resto = dígito verificador
+     5. Si da 11, es 0. Si da 10, es K.
+   ============================================================ */
+
+const productos = [
+  { id:1,  nombre:'Chaqueta impermeable Alta',   precio:89900,  emoji:'🧥' },
+  { id:2,  nombre:'Pantalón trekking Ripstop',  precio:59900,  emoji:'👖' },
+  { id:3,  nombre:'Polo técnico Trail',         precio:34900,  emoji:'👕' },
+  { id:4,  nombre:'Chaqueta impermeable Trail', precio:84900,  emoji:'🧥' },
+  { id:5,  nombre:'Pantalón Capri outdoor',     precio:52900,  emoji:'👖' },
+  { id:6,  nombre:'Polo manga larga SUN',       precio:39900,  emoji:'👚' },
+  { id:7,  nombre:'Saco de dormir -5°C',        precio:129900, emoji:'🛏️' },
+  { id:8,  nombre:'Mochila 30L Berg',           precio:74900,  emoji:'🎒' },
+  { id:9,  nombre:'Botas de trekking XTR',      precio:109900, emoji:'🥾' },
+  { id:10, nombre:'Botella térmica 750ml',      precio:24900,  emoji:'🍶' },
+  { id:11, nombre:'Gorro técnico Merino',       precio:19900,  emoji:'🧢' },
+  { id:12, nombre:'Linterna frontal 400 lumen', precio:34900,  emoji:'🔦' }
+];
+
+/* --- 1. VALIDAR RUT CHILENO --- */
+function validarRut(rut){
+  // Limpia puntos y guiones, y pasa a mayúsculas (para el K)
+  const limpio = String(rut).replace(/[.-]/g, '').toUpperCase();
+
+  // Debe tener entre 8 y 9 caracteres (ej: 12345678 o 123456789)
+  if (limpio.length < 8 || limpio.length > 9) return false;
+
+  // El último carácter es el verificador
+  const cuerpo   = limpio.slice(0, -1);
+  const verificador = limpio.slice(-1);
+
+  // Suma ponderada: se recorre de DERECHA a IZQUIERDA
+  // multiplicando por 2,3,4,5,6,7,8,9 y volviendo a 2 al llegar al 9.
+  let suma = 0;
+  let peso = 2;
+  for (let i = cuerpo.length - 1; i >= 0; i--){
+    suma += parseInt(cuerpo[i]) * peso;
+    peso = peso === 9 ? 2 : peso + 1;
+  }
+
+  // Se divide la suma por 11 y se resta el resto de 11
+  const resto = suma % 11;
+  let esperado = 11 - resto;
+
+  if (esperado === 11) esperado = 0;
+  if (esperado === 10) esperado = 'K';
+
+  // String() porque verificador viene del slice() y siempre es texto
+  return String(esperado) === verificador;
+}
+
+/* --- 2. Validar email y teléfono --- */
+const regexEmail = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i;
+const regexTel   = /^\+?56[\s-]?9[\s-]?\d{4}[\s-]?\d{4}$/;
+
+/* --- 3. Las reglas de cada campo --- */
+const reglas = {
+  nombre:     { el: document.getElementById('nombre'),     fn: v => v.trim().length >= 2 },
+  apellido:   { el: document.getElementById('apellido'),   fn: v => v.trim().length >= 2 },
+  email:      { el: document.getElementById('email'),      fn: v => regexEmail.test(v.trim()) },
+  telefono:   { el: document.getElementById('telefono'),   fn: v => regexTel.test(v.trim()) },
+  direccion:  { el: document.getElementById('direccion'),  fn: v => v.trim().length >= 6 },
+  comuna:      { el: document.getElementById('comuna'),      fn: v => v !== '' },
+  region:     { el: document.getElementById('region'),     fn: v => v !== '' }
+};
+
+/* --- 4. Costo del envío elegido --- */
+let costoEnvio = 0;
+let metodoElegido = 'Retiro en tienda';
+
+document.getElementById('metodos').addEventListener('change', e => {
+  const etiqueta = e.target.closest('.metodo');
+  if (!etiqueta) return;
+
+  document.querySelectorAll('.metodo').forEach(m => m.classList.remove('activo'));
+  etiqueta.classList.add('activo');
+
+  costoEnvio = Number(etiqueta.dataset.costo);
+  metodoElegido = etiqueta.querySelector('strong').textContent;
+
+  dibujarResumen();
+});
+
+/* --- 5. Dibujar el resumen con el envío elegido --- */
+function dibujarResumen(){
+  const items = leerCarrito();
+  const contenedor = document.getElementById('resumen');
+
+  if (items.length === 0){
+    contenedor.innerHTML = '<h2>Resumen</h2><p style="color:#5c6773;font-size:14.5px">Tu carrito está vacío.</p><a href="index.html" style="color:#e8590c;font-weight:600">Ir a la tienda</a>';
+    document.getElementById('layout').style.display = 'none';
+    return;
+  }
+
+  document.getElementById('layout').style.display = 'grid';
+
+  let subtotal = 0;
+  const lineas = items.map(item => {
+    const p = productos.find(x => x.id === item.id);
+    if (!p) return '';
+    const suma = p.precio * item.cantidad;
+    subtotal += suma;
+    return `
+      <div class="mini-linea">
+        <span class="nombre"><span class="emoji">${p.emoji}</span> ${p.nombre}
+          <span class="cant">×${item.cantidad} (${item.talla})</span></span>
+        <span>${dinero(suma)}</span>
+      </div>`;
+  }).join('');
+
+  const total = subtotal + costoEnvio;
+
+  contenedor.innerHTML = `
+    <h2>Tu pedido</h2>
+    ${lineas}
+    <div style="margin-top:16px">
+      <div class="fila"><span>Subtotal</span><span>${dinero(subtotal)}</span></div>
+      <div class="fila"><span>${metodoElegido}</span><span>${costoEnvio === 0 ? 'Gratis' : dinero(costoEnvio)}</span></div>
+      <div class="separador"></div>
+      <div class="total"><span>Total</span><span>${dinero(total)}</span></div>
+      <button class="btn-pagar" id="btnPagar">Confirmar pedido</button>
+      <a href="carrito.html" class="volver">← Volver al carrito</a>
+      <div class="seguridad">🔒 Demostración: no se cobran dinero reales</div>
+    </div>`;
+
+  document.getElementById('btnPagar').addEventListener('click', finalizarPedido);
+}
+
+/* --- 6. Validar todo y finalizar --- */
+function finalizarPedido(){
+  let todoBien = true;
+  let primeroConError = null;
+
+  for (const clave in reglas){
+    const { el, fn } = reglas[clave];
+    const campo = el.closest('.campo');
+    const ok = fn(el.value);
+
+    campo.classList.toggle('mal', !ok);
+
+    if (!ok){
+      todoBien = false;
+      if (!primeroConError) primeroConError = el;
+    }
+  }
+
+  if (!todoBien){
+    primeroConError.focus();
+    primeroConError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+
+  // Genera un número de pedido ficticio
+  const numeroPedido = 'SEN-' + Date.now().toString().slice(-8);
+  const items = leerCarrito();
+  const t = calcularTotales(items, productos);
+  const total = t.subtotal + costoEnvio;
+
+  // Muestra la pantalla de éxito
+  document.getElementById('layout').style.display = 'none';
+  const exito = document.getElementById('exito');
+  exito.classList.add('visible');
+
+  document.getElementById('datosPedido').innerHTML = `
+    <div class="fila"><span>Número de pedido</span><strong>${numeroPedido}</strong></div>
+    <div class="fila"><span>Nombre</span><span>${document.getElementById('nombre').value} ${document.getElementById('apellido').value}</span></div>
+    <div class="fila"><span>Email</span><span>${document.getElementById('email').value}</span></div>
+    <div class="fila"><span>Entrega</span><span>${metodoElegido}</span></div>
+    <div class="fila"><span>Comuna</span><span>${document.getElementById('comuna').value}</span></div>
+    <div class="fila" style="border-top:1px solid #dcd7d0;margin-top:8px;padding-top:12px">
+      <span style="font-weight:700">Total</span><span style="font-weight:800;color:#1d3a2f">${dinero(total)}</span>
+    </div>`;
+
+  // Vacía el carrito: el pedido ya se "hizo"
+  vaciarCarrito();
+  actualizarContadorCarrito();
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* --- 7. Al perder el foco, valida ese campo solo --- */
+for (const clave in reglas){
+  const { el } = reglas[clave];
+  el.addEventListener('blur', () => {
+    if (el.value.trim() === '') return;   // no molestar si está vacío
+    el.closest('.campo').classList.toggle('mal', !reglas[clave].fn(el.value));
+  });
+}
+
+/* --- 8. Si el carrito está vacío al entrar, avisa --- */
+if (leerCarrito().length === 0){
+  document.getElementById('layout').style.display = 'none';
+  document.getElementById('exito').innerHTML = `
+    <div class="icono" style="background:#fff4e6;color:#f59f00">🛒</div>
+    <h2>Tu carrito está vacío</h2>
+    <p>Agrega productos antes de finalizar la compra.</p>
+    <a href="index.html" class="btn-vuelta">Ir a la tienda</a>`;
+  document.getElementById('exito').classList.add('visible');
+}
+
+/* --- 9. Al cargar --- */
+dibujarResumen();
+</script>
+
+</body>
+</html>

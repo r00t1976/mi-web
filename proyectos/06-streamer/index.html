@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NovaPlay — Streams de videojuegos y charlas</title>
+<meta name="description" content="Canal de streaming: ranked, charlas y maratones. Entérate de los horarios, ve los mejores clips y colabora.">
+
+<style>
+/* ============================================================
+   EJEMPLO 6: PÁGINA DE STREAMER
+   ============================================================
+   Esta plantilla es como las anteriores (una sola página con
+   secciones-ancla), pero pensada para verse más "en vivo":
+
+   Técnicas que verás acá:
+   - Fondo con gradiente animado (puro CSS, sin imágenes)
+   - Insignia "EN VIVO" con punto que late
+   - Contadores que suben cuando entran en pantalla
+   - Pestañas para filtrar clips por juego
+   - Cuenta regresiva al próximo stream
+   - Marquesina infinita de plataformas
+   - Modo claro/oscuro guardado en localStorage
+   - Menú móvil + animaciones al hacer scroll
+
+   Para personalizar: cambia los colores en :root de abajo y
+   los textos directamente en el HTML.
+   ============================================================ */
+
+:root{
+  /* --- Colores de marca (cámbialos acá y se repinta todo) --- */
+  --violeta:      #8b5cf6;   /* tu color principal */
+  --violeta-osc:  #6d28d9;
+  --violeta-claro:#c4b5fd;
+  --acento:       #f43f5e;   /* rojo "EN VIVO" */
+  --verde:        #4ade80;   /* disponible / en línea */
+  --fondo:        #0e0b16;   /* oscuro por defecto */
+  --fondo-alt:    #171225;
+  --tarjeta:      #1d1730;
+  --texto:        #ece9f7;
+  --texto-medio:  #a89fc4;
+  --borde:        #2c2344;
+  --radio:        14px;
+  --max:          1120px;
+  --fuente: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+/* Modo claro: se activa con la clase .claro en <body> */
+body.claro{
+  --fondo:        #f6f4fb;
+  --fondo-alt:    #ffffff;
+  --tarjeta:      #ffffff;
+  --texto:        #1c1530;
+  --texto-medio:  #5b5470;
+  --borde:        #e3ddf2;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{
+  font-family:var(--fuente);
+  background:var(--fondo);
+  color:var(--texto);
+  line-height:1.6;
+  transition:background .3s ease, color .3s ease;
+}
+img{max-width:100%;display:block}
+a{color:var(--violeta);text-decoration:none}
+ul{list-style:none}
+.contenedor{width:100%;max-width:var(--max);margin:0 auto;padding:0 22px}
+.seccion{padding:76px 0}
+
+/* ---------- CABECERA ---------- */
+.cabecera{
+  position:sticky;top:0;z-index:100;
+  background:color-mix(in srgb, var(--fondo) 85%, transparent);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--borde);
+}
+.cabecera .contenedor{display:flex;align-items:center;justify-content:space-between;min-height:68px;gap:16px}
+.logo{font-size:20px;font-weight:800;color:var(--texto)}
+.logo span{color:var(--violeta)}
+.nav{display:flex;align-items:center;gap:26px}
+.nav a{color:var(--texto-medio);font-size:15px;font-weight:500}
+.nav a:hover{color:var(--violeta)}
+.boton-menu{display:none;background:none;border:none;font-size:26px;cursor:pointer;color:var(--texto)}
+
+/* Botón de cambiar tema (sol / luna) */
+.toggle-tema{
+  background:var(--tarjeta);border:1px solid var(--borde);
+  border-radius:20px;padding:6px 14px;cursor:pointer;
+  color:var(--texto);font-size:15px;
+}
+
+/* ---------- HERO ---------- */
+.hero{
+  position:relative;overflow:hidden;text-align:center;color:#fff;
+  padding:110px 20px 100px;
+  background:linear-gradient(120deg,#1e1145,#3b1d8f,#6d28d9,#1e1145);
+  background-size:300% 300%;
+  animation:fondo-vivo 12s ease infinite;   /* gradiente en movimiento */
+}
+@keyframes fondo-vivo{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+.hero .insignia-vivo{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(244,63,94,.2);border:1px solid var(--acento);
+  color:#fecdd3;padding:6px 16px;border-radius:20px;
+  font-size:13px;font-weight:700;letter-spacing:1.5px;margin-bottom:20px;
+}
+.hero .insignia-vivo .punto{
+  width:9px;height:9px;border-radius:50%;background:var(--acento);
+  animation:latir 1.6s infinite;
+}
+@keyframes latir{
+  0%,100%{box-shadow:0 0 0 0 rgba(244,63,94,.5)}
+  50%{box-shadow:0 0 0 7px rgba(244,63,94,0)}
+}
+.hero h1{font-size:46px;letter-spacing:-1px;line-height:1.15;margin-bottom:14px}
+.hero p{font-size:18px;color:#d9d2f5;max-width:620px;margin:0 auto 30px}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:13px 26px;border:none;border-radius:10px;
+  font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;
+  transition:transform .2s ease, box-shadow .2s ease;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.3)}
+.btn-violeta{background:var(--violeta);color:#fff}
+.btn-linea{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.5)}
+
+/* ---------- MARQUESINA ---------- */
+.marquesina{
+  overflow:hidden;border-bottom:1px solid var(--borde);
+  background:var(--fondo-alt);padding:14px 0;
+}
+.marquesina .cinta{
+  display:flex;gap:48px;width:max-content;
+  animation:deslizar 22s linear infinite;
+  font-weight:700;color:var(--texto-medio);white-space:nowrap;
+}
+@keyframes deslizar{
+  from{transform:translateX(0)}
+  to{transform:translateX(-50%)}
+}
+
+/* ---------- STATS / CONTADORES ---------- */
+.rejilla-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:20px}
+.stat{
+  background:var(--tarjeta);border:1px solid var(--borde);
+  border-radius:var(--radio);padding:26px;text-align:center;
+}
+.stat .numero{font-size:38px;font-weight:800;color:var(--violeta)}
+.stat .etiqueta{color:var(--texto-medio);font-size:14px}
+
+/* ---------- TÍTULOS DE SECCIÓN ---------- */
+.encabezado-seccion{max-width:640px;margin-bottom:40px}
+.encabezado-seccion .sobre-linea{
+  color:var(--violeta);font-size:12.5px;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;
+}
+.encabezado-seccion h2{font-size:32px;letter-spacing:-.7px;margin-bottom:10px}
+.encabezado-seccion p{color:var(--texto-medio)}
+
+/* ---------- CLIPS CON PESTAÑAS ---------- */
+.pestanas{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:26px}
+.pestana{
+  background:var(--tarjeta);border:1px solid var(--borde);
+  color:var(--texto-medio);padding:8px 18px;border-radius:20px;
+  cursor:pointer;font-weight:600;font-size:14px;font-family:inherit;
+}
+.pestana.activa{background:var(--violeta);color:#fff;border-color:var(--violeta)}
+.rejilla-clips{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px}
+.clip{
+  background:var(--tarjeta);border:1px solid var(--borde);
+  border-radius:var(--radio);overflow:hidden;transition:transform .2s ease;
+}
+.clip:hover{transform:translateY(-5px)}
+.clip .miniatura{
+  aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;
+  font-size:44px;background:linear-gradient(135deg,#2a1b57,#4c2ba8);
+}
+.clip .cuerpo{padding:16px 18px}
+.clip h3{font-size:16.5px;margin-bottom:4px}
+.clip p{font-size:13.5px;color:var(--texto-medio)}
+.clip.oculto{display:none}
+
+/* ---------- VIDEO EMBEBIDO ---------- */
+.video-marco{
+  position:relative;padding-bottom:56.25%;height:0;
+  border-radius:var(--radio);overflow:hidden;border:1px solid var(--borde);
+}
+.video-marco iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+
+/* ---------- HORARIO + CUENTA REGRESIVA ---------- */
+.layout-doble{display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:start}
+.horario li{
+  display:flex;justify-content:space-between;padding:13px 0;
+  border-bottom:1px solid var(--borde);color:var(--texto-medio);
+}
+.horario li strong{color:var(--texto)}
+.horario .hoy{color:var(--violeta);font-weight:700}
+.cuenta-regresiva{
+  background:var(--tarjeta);border:1px solid var(--borde);
+  border-radius:var(--radio);padding:26px;text-align:center;
+}
+.cuenta-regresiva .cajas{display:flex;justify-content:center;gap:14px;margin-top:14px}
+.cuenta-regresiva .caja{
+  background:var(--fondo-alt);border:1px solid var(--borde);
+  border-radius:10px;padding:14px 10px;min-width:76px;
+}
+.cuenta-regresiva .caja b{display:block;font-size:28px;color:var(--violeta)}
+.cuenta-regresiva .caja span{font-size:12px;color:var(--texto-medio)}
+
+/* ---------- CONTACTO / SPONSORS ---------- */
+.contacto{background:var(--fondo-alt)}
+.formulario{
+  background:var(--tarjeta);border:1px solid var(--borde);
+  border-radius:var(--radio);padding:28px;max-width:640px;
+}
+.campo{margin-bottom:16px}
+.campo label{display:block;font-size:13.5px;font-weight:600;margin-bottom:6px}
+.campo input,.campo textarea{
+  width:100%;padding:12px 14px;border-radius:8px;
+  background:var(--fondo);border:1.5px solid var(--borde);
+  color:var(--texto);font-size:15px;font-family:inherit;
+}
+.campo input:focus,.campo textarea:focus{outline:none;border-color:var(--violeta)}
+.mensaje-enviado{
+  display:none;background:rgba(74,222,128,.12);border:1px solid var(--verde);
+  color:var(--verde);padding:13px 16px;border-radius:10px;margin-bottom:16px;
+}
+.mensaje-enviado.visible{display:block}
+
+/* ---------- WHATSAPP FLOTANTE ---------- */
+.whatsapp-flotante{
+  position:fixed;bottom:24px;right:24px;z-index:200;width:56px;height:56px;
+  border-radius:50%;background:#25d366;color:#fff;font-size:26px;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 6px 20px rgba(37,211,102,.4);
+}
+
+/* ---------- PIE ---------- */
+.pie{border-top:1px solid var(--borde);padding:34px 0;color:var(--texto-medio);font-size:14px;text-align:center}
+
+/* ---------- ANIMACIONES AL SCROLLEAR ---------- */
+.revelar{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.revelar.visible{opacity:1;transform:none}
+
+/* ---------- RESPONSIVO ---------- */
+@media (max-width:860px){
+  .boton-menu{display:block}
+  .nav{
+    position:absolute;top:68px;left:0;right:0;background:var(--fondo-alt);
+    flex-direction:column;align-items:stretch;padding:10px 0;gap:0;
+    max-height:0;overflow:hidden;transition:max-height .3s ease;
+    border-bottom:1px solid var(--borde);
+  }
+  .nav.abierto{max-height:400px}
+  .nav a{padding:14px 22px;border-bottom:1px solid var(--borde)}
+  .nav .toggle-tema{margin:12px 22px}
+  .layout-doble{grid-template-columns:1fr}
+}
+@media (max-width:620px){
+  .seccion{padding:56px 0}
+  .hero h1{font-size:32px}
+  .hero{padding:80px 20px 70px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important}
+  .revelar{opacity:1;transform:none}
+  .marquesina .cinta{animation:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ================= CABECERA ================= -->
+<header class="cabecera">
+  <div class="contenedor">
+    <a class="logo" href="#inicio">Nova<span>Play</span></a>
+    <button class="boton-menu" id="botonMenu" aria-label="Menú">☰</button>
+    <nav class="nav" id="nav">
+      <a href="#inicio">Inicio</a>
+      <a href="#clips">Clips</a>
+      <a href="#horario">Horario</a>
+      <a href="#contacto">Sponsors</a>
+      <button class="toggle-tema" id="toggleTema">☀️ Modo claro</button>
+    </nav>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="inicio">
+  <span class="insignia-vivo"><span class="punto"></span> EN VIVO AHORA</span>
+  <h1>NovaPlay</h1>
+  <p>Streams de ranked, charlas relajadas y maratones de fin de semana. Únete a la comunidad.</p>
+  <a class="btn btn-violeta" href="#clips">▶ Ver clips</a>
+  <a class="btn btn-linea" href="#horario">Próximos directos</a>
+</section>
+
+<!-- ================= MARQUESINA ================= -->
+<div class="marquesina" aria-hidden="true">
+  <div class="cinta">
+    <span>TWITCH ✦ YOUTUBE ✦ KICK ✦ DISCORD ✦ TIKTOK ✦ TWITCH ✦ YOUTUBE ✦ KICK ✦ DISCORD ✦ TIKTOK ✦</span>
+    <span>TWITCH ✦ YOUTUBE ✦ KICK ✦ DISCORD ✦ TIKTOK ✦ TWITCH ✦ YOUTUBE ✦ KICK ✦ DISCORD ✦ TIKTOK ✦</span>
+  </div>
+</div>
+
+<!-- ================= STATS ================= -->
+<section class="seccion">
+  <div class="contenedor rejilla-stats">
+    <div class="stat revelar"><div class="numero" data-objetivo="15400">0</div><div class="etiqueta">Seguidores</div></div>
+    <div class="stat revelar"><div class="numero" data-objetivo="320">0</div><div class="etiqueta">Horas en vivo</div></div>
+    <div class="stat revelar"><div class="numero" data-objetivo="96">0</div><div class="etiqueta">Clips destacados</div></div>
+    <div class="stat revelar"><div class="numero" data-objetivo="48">0</div><div class="etiqueta">Streams al mes</div></div>
+  </div>
+</section>
+
+<!-- ================= CLIPS ================= -->
+<section class="seccion" id="clips" style="padding-top:0">
+  <div class="contenedor">
+    <div class="encabezado-seccion">
+      <p class="sobre-linea">Lo mejor de la semana</p>
+      <h2>Clips destacados</h2>
+      <p>Filtra por juego para encontrar tus momentos favoritos.</p>
+    </div>
+    <div class="pestanas" id="pestanas">
+      <button class="pestana activa" data-filtro="todos">Todos</button>
+      <button class="pestana" data-filtro="valorant">Valorant</button>
+      <button class="pestana" data-filtro="minecraft">Minecraft</button>
+      <button class="pestana" data-filtro="charlas">Charlas</button>
+    </div>
+    <div class="rejilla-clips">
+      <article class="clip revelar" data-juego="valorant">
+        <div class="miniatura">🎯</div>
+        <div class="cuerpo"><h3>Clutch 1v4 en ranked</h3><p>Valorant · 12 mil vistas</p></div>
+      </article>
+      <article class="clip revelar" data-juego="minecraft">
+        <div class="miniatura">⛏️</div>
+        <div class="cuerpo"><h3>Construcción épica en supervivencia</h3><p>Minecraft · 8 mil vistas</p></div>
+      </article>
+      <article class="clip revelar" data-juego="charlas">
+        <div class="miniatura">💬</div>
+        <div class="cuerpo"><h3>Charlando con la comunidad</h3><p>Just Chatting · 5 mil vistas</p></div>
+      </article>
+      <article class="clip revelar" data-juego="valorant">
+        <div class="miniatura">🔥</div>
+        <div class="cuerpo"><h3>Ace en partida competitiva</h3><p>Valorant · 21 mil vistas</p></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= VIDEO EMBEBIDO ================= -->
+<section class="seccion" style="padding-top:0">
+  <div class="contenedor">
+    <div class="encabezado-seccion">
+      <p class="sobre-linea">Último directo</p>
+      <h2>Revívelo completo</h2>
+    </div>
+    <!-- Cambias el src por el video que quieras -->
+    <div class="video-marco">
+      <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Último stream" allowfullscreen></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- ================= HORARIO + CUENTA REGRESIVA ================= -->
+<section class="seccion" id="horario" style="padding-top:0">
+  <div class="contenedor layout-doble">
+    <div>
+      <div class="encabezado-seccion">
+        <p class="sobre-linea">Cuándo conectarse</p>
+        <h2>Horario semanal</h2>
+      </div>
+      <ul class="horario">
+        <li><strong>Lunes</strong><span>Descanso</span></li>
+        <li><strong>Martes</strong><span>Ranked · 20:00 CLT</span></li>
+        <li><strong>Miércoles</strong><span>Charlas · 21:00 CLT</span></li>
+        <li class="hoy"><strong>Jueves</strong><span>Minecraft · 19:00 CLT</span></li>
+        <li><strong>Viernes</strong><span>Ranked · 21:00 CLT</span></li>
+        <li><strong>Sábado</strong><span>Maratón · 15:00 CLT</span></li>
+        <li><strong>Domingo</strong><span>Comunidad · 18:00 CLT</span></li>
+      </ul>
+    </div>
+    <div class="cuenta-regresiva revelar">
+      <h3>⏳ Próximo directo en</h3>
+      <p style="color:var(--texto-medio);font-size:14px">Martes · Ranked 20:00 CLT</p>
+      <div class="cajas">
+        <div class="caja"><b id="dias">0</b><span>días</span></div>
+        <div class="caja"><b id="horas">0</b><span>horas</span></div>
+        <div class="caja"><b id="minutos">0</b><span>min</span></div>
+        <div class="caja"><b id="segundos">0</b><span>seg</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACTO ================= -->
+<section class="seccion contacto" id="contacto">
+  <div class="contenedor">
+    <div class="encabezado-seccion">
+      <p class="sobre-linea">Colabora con el canal</p>
+      <h2>¿Quieres ser sponsor?</h2>
+      <p>Escríbeme y armamos una colaboración.</p>
+    </div>
+    <form class="formulario" id="formulario" novalidate>
+      <div class="mensaje-enviado" id="mensajeEnviado">¡Gracias! Te responderé pronto. ✅</div>
+      <div class="campo"><label for="nombre">Nombre</label><input id="nombre" type="text" required></div>
+      <div class="campo"><label for="correo">Correo</label><input id="correo" type="email" required></div>
+      <div class="campo"><label for="mensaje">Mensaje</label><textarea id="mensaje" rows="4" required></textarea></div>
+      <button class="btn btn-violeta" type="submit" style="width:100%">Enviar</button>
+    </form>
+  </div>
+</section>
+
+<a class="whatsapp-flotante" href="https://wa.me/56912345678" aria-label="WhatsApp">💬</a>
+
+<footer class="pie">
+  <div class="contenedor">© 2026 NovaPlay · Hecho con 💜 por la comunidad · <a href="#inicio">Volver arriba</a></div>
+</footer>
+
+<script>
+/* ============================================================
+   JAVASCRIPT PRINCIPAL
+   Todo comentado para aprender. Revisa cada bloque.
+   ============================================================ */
+
+/* 1. MENÚ MÓVIL */
+const botonMenu = document.getElementById('botonMenu');
+const nav = document.getElementById('nav');
+if (botonMenu && nav){
+  botonMenu.addEventListener('click', () => nav.classList.toggle('abierto'));
+  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nav.classList.remove('abierto')));
+}
+
+/* 2. MODO CLARO / OSCURO
+   - Guardamos la elección en localStorage para que se recuerde
+   - La clase .claro en <body> cambia las variables :root */
+const toggleTema = document.getElementById('toggleTema');
+function aplicarTema(claro){
+  document.body.classList.toggle('claro', claro);
+  toggleTema.textContent = claro ? '🌙 Modo oscuro' : '☀️ Modo claro';
+  localStorage.setItem('tema-novaplay', claro ? 'claro' : 'oscuro');
+}
+if (localStorage.getItem('tema-novaplay') === 'claro') aplicarTema(true);
+if (toggleTema) toggleTema.addEventListener('click', () => {
+  aplicarTema(!document.body.classList.contains('claro'));
+});
+
+/* 3. ANIMACIONES AL HACER SCROLL + CONTADORES
+   El IntersectionObserver avisa cuando un elemento entra
+   en pantalla: ahí le ponemos .visible, y los .numero
+   empiezan a contar hasta su objetivo. */
+const observador = new IntersectionObserver((entradas) => {
+  entradas.forEach(entrada => {
+    if (!entrada.isIntersecting) return;
+    entrada.target.classList.add('visible');
+    const numero = entrada.target.querySelector('.numero');
+    if (numero) animarContador(numero);
+    observador.unobserve(entrada.target);
+  });
+}, { threshold: 0.2 });
+document.querySelectorAll('.revelar').forEach(el => observador.observe(el));
+
+function animarContador(el){
+  const objetivo = Number(el.dataset.objetivo);
+  const duracion = 1400;
+  const inicio = performance.now();
+  function paso(ahora){
+    const progreso = Math.min((ahora - inicio) / duracion, 1);
+    el.textContent = Math.floor(objetivo * progreso).toLocaleString('es-CL');
+    if (progreso < 1) requestAnimationFrame(paso);
+  }
+  requestAnimationFrame(paso);
+}
+
+/* 4. PESTAÑAS DE CLIPS
+   Al tocar una pestaña, mostramos solo los clips de ese juego. */
+document.getElementById('pestanas').addEventListener('click', (e) => {
+  const boton = e.target.closest('.pestana');
+  if (!boton) return;
+  document.querySelectorAll('.pestana').forEach(p => p.classList.remove('activa'));
+  boton.classList.add('activa');
+  const filtro = boton.dataset.filtro;
+  document.querySelectorAll('.clip').forEach(clip => {
+    clip.classList.toggle('oculto', filtro !== 'todos' && clip.dataset.juego !== filtro);
+  });
+});
+
+/* 5. CUENTA REGRESIVA
+   Calcula cuánto falta para el próximo martes 20:00. */
+function proximoStream(){
+  const ahora = new Date();
+  const proximo = new Date(ahora);
+  proximo.setDate(ahora.getDate() + ((2 - ahora.getDay() + 7) % 7 || 7)); // martes
+  proximo.setHours(20, 0, 0, 0);
+  return proximo;
+}
+const objetivo = proximoStream();
+function actualizarCuenta(){
+  const diff = objetivo - new Date();
+  if (diff <= 0) return;
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor(diff / 3600000) % 24;
+  const m = Math.floor(diff / 60000) % 60;
+  const s = Math.floor(diff / 1000) % 60;
+  document.getElementById('dias').textContent = d;
+  document.getElementById('horas').textContent = h;
+  document.getElementById('minutos').textContent = m;
+  document.getElementById('segundos').textContent = s;
+}
+actualizarCuenta();
+setInterval(actualizarCuenta, 1000);
+
+/* 6. FORMULARIO DE SPONSORS
+   Validación simple: que los campos no estén vacíos y el
+   correo tenga formato válido. */
+const formulario = document.getElementById('formulario');
+formulario.addEventListener('submit', (e) => {
+  e.preventDefault();
+  if (!formulario.checkValidity()){
+    formulario.reportValidity();
+    return;
+  }
+  document.getElementById('mensajeEnviado').classList.add('visible');
+  formulario.reset();
+});
+</script>
+
+</body>
+</html>

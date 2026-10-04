@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  SITEMAP.XML — EJEMPLO 4
+  ============================================================
+  Le dice a Google qué páginas existen en tu sitio y cuáles
+  son importantes. Google lo usa para indexar más rápido.
+
+  CÓMO USARLO:
+  1. Sube este archivo a la raíz de tu dominio:
+     https://tusitio.cl/sitemap.xml
+  2. En Google Search Console, envíalo con "Sitemaps".
+
+  IMPORTANTE:
+  - Cambia la URL por la de tu sitio real
+  - Actualiza <lastmod> cada vez que modifiques una página
+  - Solo incluye páginas que quieras que aparezcan en Google
+    (no las páginas de "gracias" ni las de error)
+  ============================================================ -->
+
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://www.estudiohernandez.cl/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://www.estudiohernandez.cl/servicios.html</loc>
+    <lastmod>2026-09-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://www.estudiohernandez.cl/nosotros.html</loc>
+    <lastmod>2026-09-25</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://www.estudiohernandez.cl/contacto.html</loc>
+    <lastmod>2026-09-25</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+</urlset>

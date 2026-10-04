@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ============================================================
+     SEO: esto es lo que lee Google cuando indexa tu sitio
+     ============================================================ -->
+<title>JC.Carvajal.Dev — Desarrollador web freelance en Santiago, Chile</title>
+<meta name="description" content="Diseño y desarrollo de páginas web para pymes y profesionales en Santiago. Landing pages, sitios institucionales y tiendas online. Precio cerrado y plazos claros.">
+<meta name="author" content="Julio Contreras Carvajal">
+<!-- canonical: le dice a Google cuál es la dirección oficial de esta página.
+     Cambia esto cuando tengas dominio propio: https://jccarvajal.cl/ -->
+<link rel="canonical" href="https://jccarvajal-dev.netlify.app/">
+
+<!-- Vista previa cuando alguien comparte tu link en WhatsApp -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="JC.Carvajal.Dev — Desarrollador web freelance">
+<meta property="og:description" content="Páginas web para pymes y profesionales en Santiago. Landing, sitios institucionales y tiendas online.">
+<meta property="og:locale" content="es_CL">
+
+<!-- Favicon: la información que muestra Google al buscar tu nombre -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230f766e'/><text y='72' x='50' text-anchor='middle' font-size='54' font-family='sans-serif' font-weight='bold' fill='white'>JC</text></svg>">
+
+<!-- Datos estructurados: le dice a Google quién eres y a qué te dedicas.
+     Es lo que hace que tu sitio aparezca con tu nombre y cargo. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Julio Contreras Carvajal",
+  "jobTitle": "Desarrollador Web Freelance",
+  "description": "Diseño y desarrollo de páginas web para pymes y profesionales en Santiago, Chile.",
+  "email": "mailto:jc.carvajal.dev@tutamail.com",
+  "telephone": "+56951235216",
+  "url": "https://jccarvajal.cl/",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Santiago",
+    "addressRegion": "RM",
+    "addressCountry": "CL"
+  },
+  "knowsAbout": [
+    "Desarrollo web",
+    "HTML y CSS",
+    "JavaScript",
+    "WordPress",
+    "Tiendas online"
+  ],
+  "availableLanguage": "es-CL"
+}
+</script>
+
+<!-- CSS separado: así se hace en un proyecto real -->
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<!-- Permite saltar el menú con el teclado.
+     Quien navega con lector de pantalla lo agradece. -->
+<a href="#contenido" class="saltar-enlace">Saltar al contenido</a>
+
+<!-- ============================================================
+     CABECERA
+     ============================================================ -->
+<header class="cabecera">
+  <div class="contenedor">
+    <a href="index.html" class="logo">JC<span>.</span>Carvajal<span class="punto">.</span>Dev</a>
+
+    <button class="boton-menu" id="botonMenu" aria-label="Abrir menú" aria-expanded="false">☰</button>
+
+    <nav class="nav" id="nav">
+      <a href="#servicios">Servicios</a>
+      <a href="#proyectos">Proyectos</a>
+      <a href="#sobre-mi">Sobre mí</a>
+      <a href="#proceso">Proceso</a>
+      <a href="proyectos.html">Todos los proyectos</a>
+      <a href="#contacto" class="btn btn-primario">Contacto</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============================================================
+     PORTADA
+     ============================================================ -->
+<section class="hero">
+  <div class="contenedor">
+    <div>
+      <div class="saludo">Disponible para nuevos proyectos</div>
+
+      <h1>
+        Hago páginas web
+        <span class="destacado">que venden tu trabajo</span>
+      </h1>
+
+      <p class="bajada">Desarrollador web freelance en Santiago</p>
+
+      <p class="puesto">
+        <span>Julio Contreras Carvajal</span>
+        <span class="punto-sep"></span>
+        <span>Sitios web · Tiendas online</span>
+      </p>
+
+      <div class="botones">
+        <a href="#contacto" class="btn btn-acento">Cotizar mi proyecto</a>
+        <a href="proyectos.html" class="btn btn-blanco">Ver mis proyectos</a>
+      </div>
+
+      <p class="nota">
+        <span>✓</span> Primera reunión sin costo ni compromiso
+      </p>
+    </div>
+
+    <!-- Tarjeta con datos concretos: baja la barrera de contacto -->
+    <aside class="tarjeta-lateral">
+      <h2>En números</h2>
+      <div class="dato">
+        <span class="etq">Proyectos entregados</span>
+        <span class="val">5</span>
+      </div>
+      <div class="dato">
+        <span class="etq">Años de experiencia</span>
+        <span class="val">8+</span>
+      </div>
+      <div class="dato">
+        <span class="etq">Precio desde</span>
+        <span class="val">$250.000</span>
+      </div>
+      <div class="dato">
+        <span class="etq">Plazo de entrega</span>
+        <span class="val">7 días</span>
+      </div>
+      <div class="dato">
+        <span class="etq">Zona de trabajo</span>
+        <span class="val">Chile</span>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<main id="contenido">
+
+<!-- ============================================================
+     SERVICIOS
+     ============================================================ -->
+<section class="seccion" id="servicios">
+  <div class="contenedor">
+    <div class="encabezado-seccion centrado">
+      <div class="sobre-linea">Servicios</div>
+      <h2>Tres paquetes con precio cerrado</h2>
+      <p>Sabes exactamente qué recibes y cuánto pagas antes de empezar.
+         Sin sorpresas a mitad del proyecto.</p>
+    </div>
+
+    <div class="rejilla-servicios">
+
+      <!-- Paquete 1 -->
+      <article class="servicio revelar">
+        <div class="num-top">PAQUETE 01</div>
+        <div class="icono">📄</div>
+        <h3>Landing Page</h3>
+        <p class="sub">Para una página única de conversión</p>
+        <div class="precio">
+          $250.000
+          <small>entrega en 5 a 7 días</small>
+        </div>
+        <ul>
+          <li>Hasta 4 secciones</li>
+          <li>Diseño responsive</li>
+          <li>Formulario de contacto</li>
+          <li>Botón de WhatsApp</li>
+          <li>Dominio y hosting 1 año</li>
+          <li>2 rondas de cambios</li>
+        </ul>
+        <a href="#contacto" class="btn btn-linea">Quiero este</a>
+      </article>
+
+      <!-- Paquete 2 -->
+      <article class="servicio revelar">
+        <span class="insignia-popular">MÁS PEDIDO</span>
+        <div class="num-top">PAQUETE 02</div>
+        <div class="icono">🏢</div>
+        <h3>Sitio Institucional</h3>
+        <p class="sub">Para empresas y profesionales</p>
+        <div class="precio">
+          $750.000
+          <small>entrega en 2 a 3 semanas</small>
+        </div>
+        <ul>
+          <li>Hasta 8 páginas</li>
+          <li>Panel de administración</li>
+          <li>Blog integrado</li>
+          <li>Google Analytics 4</li>
+          <li>SEO on-page completo</li>
+          <li>Capacitación por video</li>
+          <li>3 rondas de cambios</li>
+        </ul>
+        <a href="#contacto" class="btn btn-primario">Quiero este</a>
+      </article>
+
+      <!-- Paquete 3 -->
+      <article class="servicio revelar">
+        <div class="num-top">PAQUETE 03</div>
+        <div class="icono">🛒</div>
+        <h3>Tienda Online</h3>
+        <p class="sub">Para vender con tarjeta en Chile</p>
+        <div class="precio">
+          $1.400.000
+          <small>entrega en 4 a 6 semanas</small>
+        </div>
+        <ul>
+          <li>Hasta 100 productos</li>
+          <li>Webpay y Mercado Pago</li>
+          <li>Gestión de stock</li>
+          <li>Cálculo de despacho</li>
+          <li>Cupones y descuentos</li>
+          <li>Capacitación 60 min</li>
+          <li>3 rondas de cambios</li>
+        </ul>
+        <a href="#contacto" class="btn btn-linea">Quiero este</a>
+      </article>
+
+    </div>
+
+    <p style="text-align:center;margin-top:34px;font-size:15px;color:var(--texto-medio)">
+      ¿Necesitas algo distinto?
+      <a href="#contacto" style="font-weight:600">Cuéntame tu caso</a> y te preparo una propuesta a medida.
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================
+     PROYECTOS DESTACADOS
+     ============================================================ -->
+<section class="seccion oscura" id="proyectos">
+  <div class="contenedor">
+    <div class="encabezado-seccion centrado">
+      <div class="sobre-linea">Proyectos</div>
+      <h2>Trabajo que puedes ver funcionando</h2>
+      <p>Cada proyecto está completo y navegable. Haz clic para abrirlo
+         y ver cómo funciona de verdad.</p>
+    </div>
+
+    <div class="rejilla-proyectos">
+
+      <article class="proyecto revelar atras-izq">
+        <div class="miniatura" style="background:linear-gradient(135deg,#1d3a2f,#4a7c59)">
+          🛍️
+          <div class="capa"><span>Ver proyecto →</span></div>
+        </div>
+        <div class="cuerpo">
+          <div class="etiquetas">
+            <span class="etiqueta">E-commerce</span>
+            <span class="etiqueta">4 páginas</span>
+          </div>
+          <h3>Tienda de ropa deportiva</h3>
+          <p>Catálogo, carrito persistente, validación de RUT chileno y
+             flujo completo de compra. Todo con JavaScript puro.</p>
+          <div class="tecnologias">
+            <span>HTML</span><span>CSS</span><span>JavaScript</span><span>localStorage</span>
+          </div>
+          <div class="enlaces">
+            <a href="proyectos/05-ecommerce/index.html" class="ver">Ver en vivo →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="proyecto revelar">
+        <div class="miniatura" style="background:linear-gradient(135deg,#1f2933,#52606d)">
+          🏛️
+          <div class="capa"><span>Ver proyecto →</span></div>
+        </div>
+        <div class="cuerpo">
+          <div class="etiquetas">
+            <span class="etiqueta">Institucional</span>
+            <span class="etiqueta">5 páginas</span>
+            <span class="etiqueta">SEO</span>
+          </div>
+          <h3>Sitio web de estudio de arquitectura</h3>
+          <p>Sitio multipágina con datos estructurados schema.org,
+             sitemap.xml y robots.txt configurados.</p>
+          <div class="tecnologias">
+            <span>HTML</span><span>CSS</span><span>schema.org</span><span>SEO</span>
+          </div>
+          <div class="enlaces">
+            <a href="proyectos/04-institucional/index.html" class="ver">Ver en vivo →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="proyecto revelar atras-der">
+        <div class="miniatura" style="background:linear-gradient(135deg,#b8543a,#d4745a)">
+          🏺
+          <div class="capa"><span>Ver proyecto →</span></div>
+        </div>
+        <div class="cuerpo">
+          <div class="etiquetas">
+            <span class="etiqueta">Catálogo</span>
+            <span class="etiqueta">WhatsApp</span>
+          </div>
+          <h3>Catálogo de cerámica artesanal</h3>
+          <p>El patrón más chileno de venta online: exhibe productos
+             lindamente y cierra la venta conversando por WhatsApp.</p>
+          <div class="tecnologias">
+            <span>HTML</span><span>CSS</span><span>JavaScript</span><span>modales</span>
+          </div>
+          <div class="enlaces">
+            <a href="proyectos/03-catalogo/index.html" class="ver">Ver en vivo →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="proyecto revelar atras-izq">
+        <div class="miniatura" style="background:linear-gradient(135deg,#5b2c9d,#7d43c4)">
+          🎓
+          <div class="capa"><span>Ver proyecto →</span></div>
+        </div>
+        <div class="cuerpo">
+          <div class="etiquetas">
+            <span class="etiqueta">Landing</span>
+            <span class="etiqueta">Conversión</span>
+          </div>
+          <h3>Landing de curso online</h3>
+          <p>Una página, un solo objetivo: inscribir. Incluye cuenta
+             regresiva, contador de cupos y página de agradecimiento.</p>
+          <div class="tecnologias">
+            <span>HTML</span><span>CSS</span><span>JavaScript</span><span>A/B ready</span>
+          </div>
+          <div class="enlaces">
+            <a href="proyectos/02-landing/index.html" class="ver">Ver en vivo →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="proyecto revelar">
+        <div class="miniatura" style="background:linear-gradient(135deg,#1a3a5c,#2c5f8f)">
+          🔧
+          <div class="capa"><span>Ver proyecto →</span></div>
+        </div>
+        <div class="cuerpo">
+          <div class="etiquetas">
+            <span class="etiqueta">One-page</span>
+            <span class="etiqueta">Formulario</span>
+          </div>
+          <h3>Sitio de servicio mecánico</h3>
+          <p>Página única con secciones, menú móvil y formulario con
+             validación de email y teléfono chileno.</p>
+          <div class="tecnologias">
+            <span>HTML</span><span>CSS</span><span>JavaScript</span><span>responsive</span>
+          </div>
+          <div class="enlaces">
+            <a href="proyectos/01-one-page/index.html" class="ver">Ver en vivo →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="proyecto revelar">
+        <div class="miniatura" style="background:linear-gradient(135deg,#4c1d95,#8b5cf6)">
+          🎮
+          <div class="capa"><span>Ver proyecto →</span></div>
+        </div>
+        <div class="cuerpo">
+          <div class="etiquetas">
+            <span class="etiqueta">Streamer</span>
+            <span class="etiqueta">Interactivo</span>
+          </div>
+          <h3>Página de streamer</h3>
+          <p>Fondo animado, insignia EN VIVO, contadores, pestañas de
+             clips, countdown y modo claro/oscuro.</p>
+          <div class="tecnologias">
+            <span>HTML</span><span>CSS</span><span>JavaScript</span><span>localStorage</span>
+          </div>
+          <div class="enlaces">
+            <a href="proyectos/06-streamer/index.html" class="ver">Ver en vivo →</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <p style="text-align:center;margin-top:40px">
+      <a href="proyectos.html" class="btn btn-linea">Ver los 6 proyectos con detalle</a>
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================
+     SOBRE MÍ
+     ============================================================ -->
+<section class="seccion sobre-mi" id="sobre-mi">
+  <div class="contenedor">
+    <div class="foto-area revelar atras-izq">
+      <span class="iniciales">JC</span>
+    </div>
+
+    <div class="texto">
+      <div class="encabezado-seccion">
+        <div class="sobre-linea">Sobre mí</div>
+        <h2>Hola, soy Julio</h2>
+      </div>
+
+      <p>
+        Empecé con WordPress y servidores Apache, instalando PHP y MySQL
+        a mano en mi propia máquina. Eso fue hace años, pero la forma de
+        pensar no cambió: <strong>una web es un proyecto, no una plantilla</strong>.
+      </p>
+      <p>
+        Hoy trabajo con las mismas ideas de siempre, con herramientas
+        actuales. Me especializo en sitios que de verdad venden: páginas
+        que cargan rápido, que se ven bien en el celular y que dejan
+        claro de qué te ocupas.
+      </p>
+      <p>
+        Trabajo solo, y eso es una ventaja para ti: hablas directo con
+        quien hace el trabajo, sin intermediarios y sin explicar lo mismo
+        tres veces.
+      </p>
+
+      <!-- Habilidades: las barras se animan con JavaScript -->
+      <div class="habilidades">
+        <div class="habilidad" data-nivel="92">
+          <div class="nombre"><span>HTML y CSS</span><span class="nivel">92%</span></div>
+          <div class="barra-fondo"><div class="barra"></div></div>
+        </div>
+        <div class="habilidad" data-nivel="85">
+          <div class="nombre"><span>JavaScript</span><span class="nivel">85%</span></div>
+          <div class="barra-fondo"><div class="barra"></div></div>
+        </div>
+        <div class="habilidad" data-nivel="78">
+          <div class="nombre"><span>PHP y MySQL</span><span class="nivel">78%</span></div>
+          <div class="barra-fondo"><div class="barra"></div></div>
+        </div>
+        <div class="habilidad" data-nivel="80">
+          <div class="nombre"><span>WordPress</span><span class="nivel">80%</span></div>
+          <div class="barra-fondo"><div class="barra"></div></div>
+        </div>
+        <div class="habilidad" data-nivel="88">
+          <div class="nombre"><span>SEO técnico</span><span class="nivel">88%</span></div>
+          <div class="barra-fondo"><div class="barra"></div></div>
+        </div>
+      </div>
+
+      <!-- Trayectoria -->
+      <div class="linea-tiempo">
+        <div class="hito">
+          <div class="anio">2016 — 2021</div>
+          <h4>WordPress y servidores propios</h4>
+          <p>Instalación de Apache, PHP y MySQL. Primeros sitios y
+             primeras interfaces con clientes.</p>
+        </div>
+        <div class="hito">
+          <div class="anio">2022 — 2024</div>
+          <h4>Estudio de diseño web</h4>
+          <p>Formación en diseño de interfaces, accesibilidad
+             y estándares de rendimiento web.</p>
+        </div>
+        <div class="hito">
+          <div class="anio">2025 — hoy</div>
+          <h4>Freelance independiente</h4>
+          <p>Sitios institucionales, landings y tiendas online
+             para pymes y profesionales en Chile.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PROCESO
+     ============================================================ -->
+<section class="seccion oscura" id="proceso">
+  <div class="contenedor">
+    <div class="encabezado-seccion centrado">
+      <div class="sobre-linea">Cómo trabajamos</div>
+      <h2>Cuatro etapas, sin sorpresas</h2>
+      <p>Sabes en qué vamos y cuánto falta en todo momento.</p>
+    </div>
+
+    <div class="rejilla-proceso">
+      <div class="paso-proceso revelar">
+        <div class="num">1</div>
+        <h3>Conversación</h3>
+        <p>Me cuentas qué necesitas. Sin costo y sin compromiso.
+           Si no te conviene, te lo digo.</p>
+      </div>
+      <div class="paso-proceso revelar">
+        <div class="num">2</div>
+        <h3>Propuesta</h3>
+        <p>Alcance, plazo y precio cerrado por escrito.
+           Sabes exactamente qué pagaste.</p>
+      </div>
+      <div class="paso-proceso revelar">
+        <div class="num">3</div>
+        <h3>Desarrollo</h3>
+        <p>Trabajo con anticipos por etapas. Ves el avance
+           cuando quieras, sin pedirlo.</p>
+      </div>
+      <div class="paso-proceso revelar">
+        <div class="num">4</div>
+        <h3>Entrega</h3>
+        <p>Te enseño a usarlo todo. 30 días de soporte
+           por si algo falla después.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CONTACTO
+     ============================================================ -->
+<section class="contacto" id="contacto">
+  <div class="contenedor">
+    <div class="encabezado-seccion">
+      <div class="sobre-linea">Contacto</div>
+      <h2>Cuéntame qué necesitas</h2>
+      <p>Te respondo el mismo día, de lunes a viernes.
+         La primera reunión no tiene costo.</p>
+    </div>
+
+    <div class="layout">
+      <div class="info-contacto">
+        <div class="dato">
+          <div class="icono">💬</div>
+          <div>
+            <h4>WhatsApp</h4>
+            <a href="https://wa.me/56951235216" target="_blank" rel="noopener">+56 9 5123 5216</a>
+          </div>
+        </div>
+
+        <div class="dato">
+          <div class="icono">📧</div>
+          <div>
+            <h4>Email</h4>
+            <a href="#" data-copiar-email="jc.carvajal.dev@tutamail.com">jc.carvajal.dev@tutamail.com</a>
+          </div>
+        </div>
+
+        <div class="dato">
+          <div class="icono">📍</div>
+          <div>
+            <h4>Zona de trabajo</h4>
+            <p>Santiago, Chile · atiendo todo el país</p>
+          </div>
+        </div>
+
+        <div class="dato">
+          <div class="icono">🕐</div>
+          <div>
+            <h4>Horario de atención</h4>
+            <p>Lunes a viernes, 9:00 – 19:00</p>
+          </div>
+        </div>
+
+        <div class="disponibilidad">
+          <span class="punto"></span>
+          <span>Actualmente aceptando proyectos para este mes</span>
+        </div>
+      </div>
+
+      <div class="formulario">
+        <div class="mensaje-enviado" id="mensajeEnviado">
+          ✓ Mensaje recibido. Te respondo en menos de 24 horas hábiles.
+        </div>
+
+        <!-- ============================================================
+             action + method: le dicen al navegador a dónde enviar los datos.
+             Formspree recibe el formulario y reenvía los datos a tu correo.
+             El id + el JavaScript agregan la validación visual.
+             ============================================================ -->
+        <form id="formularioContacto"
+              action="https://formspree.io/f/xdekwjqd"
+              method="POST"
+              novalidate>
+          <div class="campo-doble">
+            <div class="campo">
+              <label for="nombre">Nombre <span class="requerido">*</span></label>
+              <input type="text" id="nombre" name="nombre" placeholder="Tu nombre">
+              <span class="error">Escribe tu nombre</span>
+            </div>
+            <div class="campo">
+              <label for="email">Email <span class="requerido">*</span></label>
+              <input type="email" id="email" name="email" placeholder="tu@email.cl">
+              <span class="error">Revisa el formato de tu email</span>
+            </div>
+          </div>
+
+          <div class="campo">
+            <label for="telefono">WhatsApp <span class="requerido">*</span></label>
+            <input type="tel" id="telefono" name="telefono" placeholder="+56 9 1234 5678">
+            <span class="error">Formato chileno: +56 9 XXXX XXXX</span>
+          </div>
+
+          <div class="campo">
+            <label for="tipo">¿Qué necesitas?</label>
+            <select id="tipo" name="tipo">
+              <option value="">Selecciona una opción</option>
+              <option>Landing page</option>
+              <option>Sitio institucional</option>
+              <option>Tienda online</option>
+              <option>Rediseño de un sitio que ya tengo</option>
+              <option>Mantenimiento mensual</option>
+              <option>No sé todavía</option>
+            </select>
+          </div>
+
+          <div class="campo">
+            <label for="mensaje">Cuéntame brevemente</label>
+            <textarea id="mensaje" name="mensaje" placeholder="¿Qué hace tu negocio? ¿Para cuándo lo necesitas? ¿Tienes un presupuesto en mente?"></textarea>
+          </div>
+
+          <button type="submit">Enviar mensaje</button>
+
+          <p class="aviso-privacidad">
+            <span>🔒</span>
+            <span>Tu información no se comparte con nadie. Solo la uso para responderte.</span>
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================================================
+     PIE DE PÁGINA
+     ============================================================ -->
+<footer class="pie">
+  <div class="contenedor">
+    <div class="rejilla">
+      <div class="sobre-firma">
+        <div class="firma-logo">JC<span>.</span>Carvajal<span style="color:var(--acento)">.</span>Dev</div>
+        <p>Diseño y desarrollo de páginas web para pymes y
+           profesionales en Santiago, Chile.</p>
+      </div>
+
+      <div>
+        <h4>Navegación</h4>
+        <a href="#servicios">Servicios</a>
+        <a href="#proyectos">Proyectos</a>
+        <a href="#sobre-mi">Sobre mí</a>
+        <a href="#proceso">Proceso</a>
+        <a href="proyectos.html">Todos los proyectos</a>
+      </div>
+
+      <div>
+        <h4>Contacto</h4>
+        <a href="https://wa.me/56951235216" target="_blank" rel="noopener">WhatsApp +56 9 5123 5216</a>
+        <a href="#" data-copiar-email="jc.carvajal.dev@tutamail.com">jc.carvajal.dev@tutamail.com</a>
+      </div>
+    </div>
+
+    <div class="abajo">
+      <span>© <span data-anio-actual>2026</span> Julio Contreras Carvajal</span>
+      <span>Sitio hecho a mano · Santiago, Chile</span>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/56951235216" class="whatsapp-flotante" target="_blank" rel="noopener" title="Escríbeme por WhatsApp">💬</a>
+
+<!-- El JavaScript va al FINAL del body, para que encuentre todo el HTML -->
+<script src="js/main.js"></script>
+
+</body>
+</html>

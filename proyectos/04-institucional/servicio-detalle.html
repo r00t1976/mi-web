@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Remodelación de oficinas — Estudio Hernández Arquitectura</title>
+<meta name="description" content="Remodelación y habilitación de oficinas en Santiago. Desde 95 m². Trámite completo ante la DOM. 3 a 6 meses de obra. Precio desde $2.400.000.">
+<link rel="canonical" href="https://www.estudiohernandez.cl/servicios/oficinas.html">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:#1f2933;line-height:1.65;background:#fff}
+a{color:inherit;text-decoration:none}ul{list-style:none}h1,h2,h3,h4{line-height:1.2;font-weight:600}
+.contenedor{width:100%;max-width:1150px;margin:0 auto;padding:0 24px}
+.cabecera{background:#fff;border-bottom:1px solid #e4e7eb;position:sticky;top:0;z-index:100}
+.cabecera .contenedor{display:flex;align-items:center;justify-content:space-between;min-height:74px}
+.logo{font-size:19px;font-weight:700}.logo span{display:block;font-size:10.5px;font-weight:400;letter-spacing:2.5px;color:#52606d;text-transform:uppercase}
+.nav{display:flex;gap:30px;align-items:center}
+.nav a{font-size:15px;color:#52606d;font-weight:500}.nav a:hover,.nav a.activo{color:#d9480f}
+.btn{display:inline-block;background:#d9480f;color:#fff;padding:12px 24px;border-radius:4px;font-weight:600;font-size:15px}
+.btn:hover{background:#bf3c0c}
+.boton-menu{display:none;background:none;border:none;font-size:26px;cursor:pointer}
+.migas{background:#f5f3ef;padding:14px 0;font-size:14px;color:#52606d}
+.migas a:hover{color:#d9480f}
+.portada-interior{background:linear-gradient(135deg,#1f2933 0%,#52606d 100%);color:#fff;padding:64px 0}
+.portada-interior h1{font-size:40px;letter-spacing:-1px;margin-bottom:14px}
+.portada-interior p{font-size:18px;color:#e4e7eb;max-width:640px}
+.seccion{padding:74px 0}.seccion.gris{background:#f5f3ef}
+.encabezado-seccion{max-width:660px;margin-bottom:40px}
+.encabezado-seccion h2{font-size:32px;letter-spacing:-.5px;margin-bottom:11px}
+.encabezado-seccion p{font-size:17px;color:#52606d}
+.dos-col{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.lista-check li{padding:10px 0;border-bottom:1px solid #f4f6f8;color:#3e4c59;font-size:16px;display:flex;gap:12px;align-items:flex-start}
+.lista-check li:last-child{border-bottom:none}
+.lista-check li::before{content:"✓";color:#d9480f;font-weight:700;flex-shrink:0}
+.rejilla{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:26px}
+.tarjeta{background:#fff;border:1px solid #e4e7eb;border-radius:4px;padding:28px 24px}
+.tarjeta h3{font-size:19px;margin-bottom:9px}.tarjeta p{color:#52606d;font-size:15.5px}
+.tarjeta.destacada{background:#fff7ed;border-color:#fed7aa}
+.caja-precio{background:#fff;border:2px solid #d9480f;border-radius:8px;padding:34px;max-width:520px}
+.caja-precio .fila{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #f4f6f8;font-size:16px}
+.caja-precio .fila:last-of-type{border-bottom:none;font-weight:700;font-size:18px}
+.proceso{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:28px}
+.paso .num{width:42px;height:42px;border-radius:50%;background:#d9480f;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:17px;margin-bottom:14px}
+.paso h4{font-size:17px;margin-bottom:6px}.paso p{color:#52606d;font-size:15px}
+.pregunta{border:1px solid #e4e7eb;border-radius:4px;margin-bottom:11px;background:#fff;overflow:hidden}
+.pregunta button{width:100%;background:none;border:none;text-align:left;padding:18px 22px;font-size:16px;font-weight:600;color:#1f2933;cursor:pointer;font-family:inherit;display:flex;justify-content:space-between;gap:14px;align-items:center}
+.pregunta button:hover{background:#f5f3ef}
+.pregunta .flecha{transition:transform .3s;color:#d9480f;font-size:19px;flex-shrink:0}
+.pregunta.abierta .flecha{transform:rotate(180deg)}
+.respuesta{max-height:0;overflow:hidden;transition:max-height .3s;color:#52606d;font-size:15.5px;padding:0 22px}
+.pregunta.abierta .respuesta{max-height:260px;padding:0 22px 20px}
+.cta{background:#d9480f;color:#fff;text-align:center;padding:60px 24px}
+.cta h2{font-size:31px;margin-bottom:12px}.cta p{font-size:18px;opacity:.94;max-width:560px;margin:0 auto 26px}
+.pie{background:#1f2933;color:#9aa5b1;padding:48px 0 26px;font-size:14.5px}
+.pie .rejilla{display:grid;grid-template-columns:2fr 1fr 1fr;gap:34px;margin-bottom:32px}
+.pie h4{color:#fff;font-size:15px;margin-bottom:13px}.pie a{color:#9aa5b1;display:block;padding:4px 0}
+.pie .abajo{border-top:1px solid #3e4c59;padding-top:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:13.5px}
+@media (max-width:820px){
+  .boton-menu{display:block}
+  .nav{position:absolute;top:74px;left:0;right:0;background:#fff;flex-direction:column;gap:0;align-items:stretch;padding:8px 0;max-height:0;overflow:hidden;transition:max-height .3s;border-bottom:1px solid #e4e7eb}
+  .nav.abierto{max-height:380px}.nav a{padding:14px 24px;border-bottom:1px solid #f4f6f8}.nav .btn{margin:12px 24px;text-align:center}
+  .dos-col{grid-template-columns:1fr;gap:34px}
+  .portada-interior h1{font-size:30px}
+  .encabezado-seccion h2{font-size:26px}
+  .pie .rejilla{grid-template-columns:1fr;gap:26px}
+}
+</style>
+</head>
+
+<body>
+
+<header class="cabecera">
+  <div class="contenedor">
+    <div class="logo">Hernández<span>Arquitectura</span></div>
+    <button class="boton-menu" id="botonMenu">☰</button>
+    <nav class="nav" id="nav">
+      <a href="index.html">Inicio</a>
+      <a href="servicios.html" class="activo">Servicios</a>
+      <a href="nosotros.html">El estudio</a>
+      <a href="contacto.html">Contacto</a>
+      <a href="contacto.html" class="btn">Proyecto nuevo</a>
+    </nav>
+  </div>
+</header>
+
+<div class="migas">
+  <div class="contenedor">
+    <a href="index.html">Inicio</a> <span>/</span>
+    <a href="servicios.html">Servicios</a> <span>/</span>
+    <strong>Oficinas y comercio</strong>
+  </div>
+</div>
+
+<section class="portada-interior">
+  <div class="contenedor">
+    <h1>Oficinas y comercio</h1>
+    <p>Remodelaciones, habilitaciones y locales comerciales. Cumplimos con
+       la normativa de accesibilidad y seguridad de la DOM, y entregamos el
+       espacio listo para operar.</p>
+  </div>
+</section>
+
+<section class="seccion">
+  <div class="contenedor">
+    <div class="dos-col">
+      <div>
+        <div class="encabezado-seccion">
+          <h2>Un espacio que trabaja contigo</h2>
+          <p>Una oficina mal diseñada te cuesta plata todos los días: el
+            el ambiente abierto que no concentra a nadie, el puesto mal iluminado que
+             cansa la vista, la sala de reuniones que nadie quiere usar.</p>
+          <p style="margin-top:14px">Diseñamos mirando cómo trabaja tu equipo
+             hoy y cómo quieres que trabaje en tres años. No hacemos planos
+             bonitos que cuestan bien y funcionan mal.</p>
+        </div>
+      </div>
+      <div>
+        <h3 style="font-size:19px;margin-bottom:16px">Qué incluye</h3>
+        <ul class="lista-check">
+          <li>Levantamiento del espacio existente</li>
+          <li>Distribución y propuesta de zonificación</li>
+          <li>Proyecto de arquitectura y de interior</li>
+          <li>Proyecto eléctrico, sanitario y presión</li>
+          <li>Tramitación de permiso ante la DOM</li>
+          <li>Coordinación con instalaciones specialist</li>
+          <li>Plan de señalética e iluminación</li>
+          <li>Entrega con el espacio habilitado</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="seccion gris">
+  <div class="contenedor">
+    <div class="encabezado-seccion centrado" style="margin-inline:auto;text-align:center;max-width:640px;margin-bottom:42px">
+      <h2>Tres tipos de proyecto</h2>
+      <p>El que necesitas depende del estado del espacio y de cuánto puedes mover.</p>
+    </div>
+    <div class="rejilla">
+      <div class="tarjeta">
+        <h3>Remodelación</h3>
+        <p>El espacio ya existe y funciona, pero quieres mejorar la distribución,
+           la iluminación y los acabados. Sin tocar la estructura.</p>
+        <p style="margin-top:12px"><strong style="color:#d9480f">Desde $2.400.000</strong><br>
+        <span style="font-size:14px">3 a 5 meses</span></p>
+      </div>
+      <div class="tarjeta destacada">
+        <h3>Habilitación</h3>
+        <p>Un local vacío que hay que habilitar desde cero: tablerías, baño,
+           iluminación, climatización, señalética. El proyecto más común.</p>
+        <p style="margin-top:12px"><strong style="color:#d9480f">Desde $3.800.000</strong><br>
+        <span style="font-size:14px">4 a 6 meses</span></p>
+      </div>
+      <div class="tarjeta">
+        <h3>Ampliación</h3>
+        <p>Añadir superficie o fusionar dos unidades. Requiere estudio
+           estructural previo y suele tener más trámites que los otros.</p>
+        <p style="margin-top:12px"><strong style="color:#d9480f">Desde $4.500.000</strong><br>
+        <span style="font-size:14px">5 a 8 meses</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="seccion">
+  <div class="contenedor">
+    <div class="encabezado-seccion">
+      <h2>Cómo avanzamos</h2>
+      <p>Con fecha y precio cerrado en cada etapa.</p>
+    </div>
+    <div class="proceso">
+      <div class="paso">
+        <div class="num">1</div>
+        <h4>Visita y medición</h4>
+        <p>Sin costo. Vamos al espacio, lo medimos y hablamos de qué te molesta hoy.</p>
+      </div>
+      <div class="paso">
+        <div class="num">2</div>
+        <h4>Propuesta</h4>
+        <p>Alcance, plazo y precio fijo. Si no calza con tu presupuesto, lo ajustamos o te decimos que no.</p>
+      </div>
+      <div class="paso">
+        <div class="num">3</div>
+        <h4>Proyecto y permiso</h4>
+        <p>Planos finales y Especificaciones técnicas. 4 a 8 semanas según el tamaño.</p>
+      </div>
+      <div class="paso">
+        <div class="num">4</div>
+        <h4>Obra</h4>
+        <p>Coordinación semanal con informe de avance. Entrega con el espacio limpio y habilitado.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="seccion gris">
+  <div class="contenedor">
+    <div class="dos-col">
+      <div>
+        <h2 style="font-size:29px;letter-spacing:-.5px;margin-bottom:12px">Valores de referencia</h2>
+        <p style="color:#52606d">El precio depende del tamaño en m², la complejidad de
+           instalaciones y el nivel de acabado. Estos son los rangos con que trabajamos.</p>
+        <div class="caja-precio" style="margin-top:24px">
+          <div class="fila"><span>Proyecto completo (por m²)</span><span>$55.000 – $95.000</span></div>
+          <div class="fila"><span>Remodelación 200 m²</span><span>$2.400.000 – $3.600.000</span></div>
+          <div class="fila"><span>Habilitación 150 m²</span><span>$3.800.000 – $5.700.000</span></div>
+          <div class="fila"><span>Tramitación DOM</span><span>Incluida</span></div>
+        </div>
+        <p style="font-size:13.5px;color:#9aa5b1;margin-top:14px">
+          *No incluye mobiliario ni obra gruesa. Se cotizan aparte según lo que ya tengas.
+        </p>
+      </div>
+      <div>
+        <h3 style="font-size:21px;margin-bottom:20px">Preguntas frecuentes</h3>
+        <div class="pregunta">
+          <button>¿Puedo seguir operando durante la obra?<span class="flecha">⌄</span></button>
+          <div class="respuesta">Sí, en la mayoría de los casos. Se puede trabajar por etapas
+          para no cerrar la operación entera. Lo conversamos en la primera visita.</div>
+        </div>
+        <div class="pregunta">
+          <button>¿La DOM puede rechazar el proyecto?<span class="flecha">⌄</span></button>
+          <div class="respuesta">Puede, y es común. Por eso revisamos los antecedentes antes de
+          diseñar: si algo no va a pasar, te lo decimos en la propuesta, no después.</div>
+        </div>
+        <div class="pregunta">
+          <button>¿Trabajan con nuestro constructor?<span class="flecha">⌄</span></button>
+          <div class="respuesta">Sí. Si ya tienes uno con experiencia, coordinamos con él.
+          Si no, te recomendamos 3 de confianza.</div>
+        </div>
+        <div class="pregunta">
+          <button>¿Cada cuánto se paga?<span class="flecha">⌄</span></button>
+          <div class="respuesta">30% al firmar, 40% al aprobar el proyecto, 30% al entregar.
+          Es el mismo esquema para todos los clientes.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="contenedor">
+    <h2>¿Hablamos de tu espacio?</h2>
+    <p>Visita y medición sin costo. 40 minutos y una opinión honesta.</p>
+    <a href="contacto.html" class="btn" style="background:#fff;color:#d9480f">Agendar visita</a>
+  </div>
+</section>
+
+<footer class="pie">
+  <div class="contenedor">
+    <div class="rejilla">
+      <div>
+        <h4>Estudio Hernández</h4>
+        <p>Arquitectura desde 2008. Proyectos de vivienda, comercio y permisos en Santiago.</p>
+      </div>
+      <div>
+        <h4>Navegación</h4>
+        <a href="index.html">Inicio</a>
+        <a href="servicios.html">Servicios</a>
+        <a href="nosotros.html">El estudio</a>
+        <a href="contacto.html">Contacto</a>
+      </div>
+      <div>
+        <h4>Contacto</h4>
+        <a href="tel:+56912345678">+56 9 1234 5678</a>
+        <a href="mailto:contacto@estudiohernandez.cl">contacto@estudiohernandez.cl</a>
+        <p>Av. Isidora Goyenechea 2930<br>Of. 802, Las Condes</p>
+      </div>
+    </div>
+    <div class="abajo">
+      <span>© 2026 Estudio Hernández Arquitectura</span>
+      <span>Sitio construido por Julio</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* --- Menú móvil --- */
+const botonMenu=document.getElementById('botonMenu');
+const nav=document.getElementById('nav');
+botonMenu.addEventListener('click',()=>nav.classList.toggle('abierto'));
+nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('abierto')));
+
+/* --- Acordeón de preguntas frecuentes --- */
+document.querySelectorAll('.pregunta button').forEach(boton=>{
+  boton.addEventListener('click',()=>{
+    const bloque=boton.parentElement;
+    const estabaAbierta=bloque.classList.contains('abierta');
+    document.querySelectorAll('.pregunta').forEach(p=>p.classList.remove('abierta'));
+    if(!estabaAbierta) bloque.classList.add('abierta');
+  });
+});
+</script>
+
+</body>
+</html>

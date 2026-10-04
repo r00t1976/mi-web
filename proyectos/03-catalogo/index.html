@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cerámica Alerce — Piezas a fuego lento</title>
+<meta name="description" content="Cerámica artesanal hecha a fuego lento en San Bartolo. Tazas, fuentes, materas y piezas únicas. Pide por WhatsApp.">
+
+<style>
+/* ============================================================
+   EJEMPLO 3: CATÁLOGO CON CIERRE POR WHATSAPP
+   ============================================================
+   El patrón MÁS Chileno de venta online: exhibes productos
+   lindamente, pero la venta se cierra conversando.
+
+   Por qué es tan común acá: muchos negocios venden
+   productos personalizados o a pedido, y automatizar el
+   cobro no tiene sentido todavía. Mucho menos trabajo que
+   un e-commerce completo, y se cobra lo mismo.
+
+   Técnicas nuevas que verás:
+   - Datos en un ARRAY de JavaScript (simula la base de datos)
+   - Renderizado dinámico de la grilla
+   - Filtros por categoría
+   - Modal de detalle rápido
+   - URL "?id=" para compartir un producto
+   ============================================================ */
+
+:root{
+  --terracota:#b8543a;
+  --terracota-claro:#d4745a;
+  --crema:#faf6f1;
+  --arena:#f0e6da;
+  --verde-oliva:#6b705c;
+  --gris:#5c6773;
+  --blanco:#fff;
+  --texto:#2a2520;
+  --radio:12px;
+  --max:1200px;
+  --sombra:0 4px 18px rgba(90,60,40,.10);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:Georgia,"Times New Roman",serif;
+  color:var(--texto);line-height:1.65;background:var(--crema);
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+button{font-family:inherit}
+.contenedor{width:100%;max-width:var(--max);margin:0 auto;padding:0 24px}
+
+/* ---------- CABECERA ---------- */
+.cabecera{background:var(--crema);border-bottom:1px solid var(--arena);position:sticky;top:0;z-index:100}
+.cabecera .contenedor{display:flex;align-items:center;justify-content:space-between;min-height:76px}
+.marca{font-size:26px;font-weight:400;letter-spacing:2px;color:var(--terracota)}
+.marca span{display:block;font-size:11px;letter-spacing:4px;color:var(--verde-oliva);text-transform:uppercase}
+.menu{display:flex;gap:28px;align-items:center}
+.menu a{font-size:15.5px;color:var(--verde-oliva);letter-spacing:.5px}
+.menu a:hover{color:var(--terracota)}
+.boton-menu{display:none;background:none;border:none;font-size:26px;cursor:pointer;color:var(--terracota)}
+
+/* ---------- PORTADA ---------- */
+.portada{
+  text-align:center;padding:76px 24px 62px;
+  border-bottom:1px solid var(--arena);
+}
+.portada h1{font-size:46px;font-weight:400;color:var(--terracota);margin-bottom:16px;line-height:1.2}
+.portada p{font-size:18px;color:var(--verde-oliva);max-width:620px;margin:0 auto}
+
+/* ---------- FILTROS ---------- */
+.filtros{
+  display:flex;gap:10px;justify-content:center;flex-wrap:wrap;
+  padding:34px 24px 6px;
+}
+.filtro{
+  background:transparent;border:1.5px solid var(--arena);
+  color:var(--verde-oliva);padding:10px 22px;border-radius:30px;
+  font-size:14.5px;cursor:pointer;transition:all .2s;letter-spacing:.3px;
+}
+.filtro:hover{border-color:var(--terracota-claro);color:var(--terracota)}
+.filtro.activo{background:var(--terracota);border-color:var(--terracota);color:var(--crema)}
+
+/* ---------- GRILLA DE PRODUCTOS ---------- */
+.grilla{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+  gap:28px;padding:34px 0 70px;
+}
+.producto{
+  background:var(--blanco);border-radius:var(--radio);
+  overflow:hidden;cursor:pointer;transition:transform .25s,box-shadow .25s;
+  border:1px solid #efe7dd;
+}
+.producto:hover{transform:translateY(-5px);box-shadow:var(--sombra)}
+.producto .imagen{
+  aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;
+  font-size:70px;position:relative;overflow:hidden;
+}
+.marca-agua{
+  position:absolute;top:12px;right:12px;
+  background:var(--terracota);color:var(--crema);
+  padding:3px 11px;border-radius:12px;font-size:11.5px;
+  font-family:-apple-system,sans-serif;letter-spacing:.5px;
+}
+.producto .info{padding:20px}
+.producto h3{font-size:19px;font-weight:400;color:var(--texto);margin-bottom:6px}
+.producto .categoria{
+  font-size:12.5px;color:var(--verde-oliva);text-transform:uppercase;
+  letter-spacing:1.2px;margin-bottom:11px;font-family:-apple-system,sans-serif;
+}
+.producto .precio{
+  font-size:21px;color:var(--terracota);font-family:-apple-system,sans-serif;font-weight:600;
+}
+.producto .precio .consultar{
+  display:block;font-size:13px;color:var(--verde-oliva);font-weight:400;margin-top:3px;
+}
+.vacio{
+  grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--verde-oliva);font-size:18px;
+}
+
+/* ---------- MODAL ---------- */
+.modal-fondo{
+  position:fixed;inset:0;background:rgba(42,37,32,.65);
+  display:none;align-items:center;justify-content:center;z-index:200;padding:24px;
+}
+.modal-fondo.visible{display:flex}
+.modal{
+  background:var(--crema);border-radius:16px;max-width:800px;width:100%;
+  max-height:88vh;overflow-y:auto;position:relative;
+}
+.modal-cerrar{
+  position:absolute;top:14px;right:14px;background:var(--blanco);
+  border:none;width:38px;height:38px;border-radius:50%;
+  font-size:22px;cursor:pointer;color:var(--terracota);
+  box-shadow:0 2px 8px rgba(0,0,0,.15);z-index:2;line-height:1;
+}
+.modal-cerrar:hover{background:var(--arena)}
+.modal-dos{display:grid;grid-template-columns:1fr 1fr}
+.modal-imagen{
+  aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;
+  font-size:130px;border-radius:16px 0 0 16px;
+}
+.modal-info{padding:34px 32px}
+.modal-info h2{font-size:27px;font-weight:400;margin-bottom:5px;line-height:1.25}
+.modal-info .categoria{
+  font-size:12.5px;color:var(--verde-oliva);text-transform:uppercase;
+  letter-spacing:1.2px;margin-bottom:16px;font-family:-apple-system,sans-serif;
+}
+.modal-info .precio{
+  font-size:30px;color:var(--terracota);font-family:-apple-system,sans-serif;
+  font-weight:600;margin-bottom:6px;
+}
+.modal-info .precio small{display:block;font-size:14px;color:var(--verde-oliva);font-weight:400;margin-top:4px}
+.modal-info .descripcion{
+  color:#4a443c;font-size:15.5px;margin:20px 0;
+  padding-top:20px;border-top:1px solid var(--arena);
+}
+.caracteristicas{margin-bottom:22px}
+.caracteristicas li{
+  padding:8px 0;border-bottom:1px solid var(--arena);
+  font-size:15px;color:#4a443c;display:flex;gap:11px;align-items:flex-start;
+}
+.caracteristicas li:last-child{border-bottom:none}
+.caracteristicas li::before{content:"◈";color:var(--terracota-claro);flex-shrink:0}
+.btn-whatsapp{
+  display:block;width:100%;background:#25d366;color:#fff;
+  padding:15px;border:none;border-radius:10px;
+  font-size:16.5px;font-weight:700;cursor:pointer;text-align:center;
+  text-decoration:none;font-family:-apple-system,sans-serif;
+}
+.btn-whatsapp:hover{background:#1eb955}
+.nota-compra{
+  text-align:center;font-size:13px;color:var(--verde-oliva);margin-top:13px;
+}
+
+/* ---------- PIE ---------- */
+.pie{
+  background:var(--verde-oliva);color:#e8e4dc;
+  text-align:center;padding:44px 24px;font-size:14.5px;
+}
+.pie h3{font-size:20px;margin-bottom:12px;font-weight:400}
+.pie p{margin-bottom:6px}
+
+/* ---------- WHATSAPP FLOTANTE ---------- */
+.whatsapp{
+  position:fixed;bottom:24px;right:24px;width:58px;height:58px;
+  background:#25d366;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;font-size:28px;z-index:200;
+  box-shadow:0 5px 18px rgba(37,211,102,.45);transition:transform .2s;
+  font-family:-apple-system,sans-serif;
+}
+.whatsapp:hover{transform:scale(1.1)}
+
+/* ---------- RESPONSIVO ---------- */
+@media (max-width:820px){
+  .boton-menu{display:block}
+  .menu{
+    position:absolute;top:76px;left:0;right:0;background:var(--crema);
+    flex-direction:column;gap:0;align-items:stretch;padding:10px 0;
+    max-height:0;overflow:hidden;transition:max-height .3s;
+    border-bottom:1px solid var(--arena);
+  }
+  .menu.abierto{max-height:320px}
+  .menu a{padding:13px 24px;border-bottom:1px solid var(--arena)}
+  .portada h1{font-size:34px}
+  .modal-dos{grid-template-columns:1fr}
+  .modal-imagen{border-radius:16px 16px 0 0;aspect-ratio:16/10;font-size:90px}
+}
+@media (max-width:520px){
+  .portada{padding:52px 20px 44px}
+  .grilla{grid-template-columns:1fr 1fr;gap:16px}
+  .producto .info{padding:15px}
+  .producto h3{font-size:16px}
+  .producto .precio{font-size:17px}
+  .whatsapp{width:52px;height:52px;font-size:24px;bottom:18px;right:18px}
+  .modal-info{padding:26px 22px}
+}
+</style>
+</head>
+
+<body>
+
+<header class="cabecera">
+  <div class="contenedor">
+    <div class="marca">Alerce<span>Cerámica</span></div>
+    <button class="boton-menu" id="botonMenu">☰</button>
+    <nav class="menu" id="menu">
+      <a href="#catalogo">Catálogo</a>
+      <a href="#proceso">El proceso</a>
+      <a href="#pedidos">Pedidos</a>
+    </nav>
+  </div>
+</header>
+
+<section class="portada">
+  <h1>Piezas cocidas a 2.400 grados de paciencia</h1>
+  <p>Cada pieza de Alerce se hace a mano en San Bartolo y se cuece a fuego lento
+     durante 14 horas. No hay dos iguales, y eso es exactamente lo que las hace especiales.</p>
+</section>
+
+<!-- FILTROS -->
+<div class="filtros" id="filtros">
+  <button class="filtro activo" data-cat="todos">Todos</button>
+  <button class="filtro" data-cat="vasos">Vasos y tazas</button>
+  <button class="filtro" data-cat="fuente">Fuentes y platos</button>
+  <button class="filtro" data-cat="decoracion">Decoración</button>
+  <button class="filtro" data-cat="regalos">Regalos</button>
+</div>
+
+<!-- GRILLA (se llena con JavaScript) -->
+<section class="contenedor">
+  <div class="grilla" id="grilla"></div>
+</section>
+
+<section id="pedidos" style="padding:60px 24px;background:var(--arena);text-align:center">
+  <h2 style="font-size:32px;font-weight:400;color:var(--terracota);margin-bottom:14px">¿Viste algo que te gustó?</h2>
+  <p style="color:var(--verde-oliva);max-width:560px;margin:0 auto 26px">
+    Escríbeme por WhatsApp con el nombre de la pieza. Te confirmo disponibilidad,
+    te mando fotos reales y coordinamos la entrega en Santiago o a lo largo del país.
+  </p>
+  <a href="https://wa.me/56987654321" class="btn-whatsapp" style="display:inline-block;width:auto;padding:15px 40px">
+    💬 Escribir por WhatsApp
+  </a>
+</section>
+
+<!-- MODAL -->
+<div class="modal-fondo" id="modalFondo">
+  <div class="modal">
+    <button class="modal-cerrar" id="modalCerrar">×</button>
+    <div class="modal-dos">
+      <div class="modal-imagen" id="modalImagen"></div>
+      <div class="modal-info" id="modalInfo"></div>
+    </div>
+  </div>
+</div>
+
+<footer class="pie">
+  <h3>Alerce Cerámica</h3>
+  <p>Taller artesanal · San Bartolo, Santiago</p>
+  <p>Miércoles a domingo, 11:00 – 18:00 · Visitas con cita</p>
+  <p style="margin-top:14px">hecho a mano con ↑ en Chile</p>
+</footer>
+
+<a href="https://wa.me/56987654321" class="whatsapp" target="_blank" rel="noopener">💬</a>
+
+<script>
+/* ============================================================
+   JAVASCRIPT — EJEMPLO 3
+   ============================================================
+   La clave de este ejemplo está en el ARRAY 'productos'.
+   Esa estructura es la misma que te va a devolver una base
+   de datos (o una API) más adelante. Solo cambia de dónde
+   vienen los datos.
+   ============================================================ */
+
+/* --- 1. LOS DATOS ---
+   Para modificar la tienda, edita SOLO este bloque.
+   Cada producto tiene:
+   - id: número único (se usa en la URL)
+   - nombre, categoria, precio, emoji, color
+   - descripcion y caracteristicas (lo que verá el cliente) */
+const productos = [
+  {
+    id: 1,
+    nombre: 'Taza Alba',
+    categoria: 'vasos',
+    precio: 28000,
+    emoji: '☕',
+    color: '#e8ddd0',
+    descripcion: 'Taza de 350 ml con asa curva comfortable. Perfecta para el café de la mañana que ya no quieres que se enfríe.',
+    caracteristicas: ['350 ml de capacidad', 'Apto para microondas y lavavajillas', 'Gres de Arcilla rojo', 'Alto 10 cm']
+  },
+  {
+    id: 2,
+    nombre: 'Vaso Alpino',
+    categoria: 'vasos',
+    precio: 24000,
+    emoji: '🥛',
+    color: '#dce4e0',
+    descripcion: 'Vaso alto y delgado para el agua de la oficina. La textura del exterior recuerda la corteza de un pino.',
+    caracteristicas: ['400 ml de capacidad', 'No apto para microondas', 'Gres esmaltado en verde salvia', 'Alto 16 cm']
+  },
+  {
+    id: 3,
+    nombre: 'Fuente Rayada',
+    categoria: 'fuente',
+    precio: 55000,
+    emoji: '🍽️',
+    color: '#e3dcd0',
+    descripcion: 'Fuente redonda de 28 cm con rayas hechas a mano con la punta del pincel. Para usar sola en la mesa o llena de cosas.',
+    caracteristicas: ['28 cm de diámetro', 'Apto para lavavajillas', 'Base con pie antideslizante', 'Peso 1,2 kg']
+  },
+  {
+    id: 4,
+    nombre: 'Plato Onda',
+    categoria: 'fuente',
+    precio: 42000,
+    emoji: '🍲',
+    color: '#e8e0d4',
+    descripcion: 'Plato hondo de 24 cm con una onda en el borde. Ideal para cazuelas y pastas con salsa.',
+    caracteristicas: ['24 cm de diámetro', 'Apto para microondas', 'Borde con relieve manual', 'Peso 780 g']
+  },
+  {
+    id: 5,
+    nombre: 'Vaso Altar',
+    categoria: 'decoracion',
+    precio: 68000,
+    emoji: '🕯️',
+    color: '#ddd5c8',
+    descripcion: 'Vaso alto de pie, 32 cm. Para ramas secas de eucalipto o para guardar leña al lado de la chimenea.',
+    caracteristicas: ['32 cm de alto', '24 cm de diámetro en la boca', 'Apto para agua', 'Acabado mate por fuera']
+  },
+  {
+    id: 6,
+    nombre: 'Cuadro Textura',
+    categoria: 'decoracion',
+    precio: 45000,
+    emoji: '🖼️',
+    color: '#e0d8ca',
+    descripcion: 'Paño de barro cocido de 20x20 cm para colgar en la pared. Cada uno es un patrón distinto.',
+    caracteristicas: ['20 x 20 cm', 'Se cuelga con clavo o hilo', 'Parte de atrás sin esmaltar', 'Peso 500 g']
+  },
+  {
+    id: 7,
+    nombre: 'Mate Camahuara',
+    categoria: 'regalos',
+    precio: 38000,
+    emoji: '🧉',
+    color: '#dcd3c2',
+    descripcion: 'Mate con detalle de alpaca labrada a mano. Viene en bolsa de algodón para regalar.',
+    caracteristicas: ['Mate con bombilla', 'Alpaca labrada a mano', 'Bolsa de algodón incluida', '280 ml']
+  },
+  {
+    id: 8,
+    nombre: 'Juego de 4 Tazas',
+    categoria: 'regalos',
+    precio: 95000,
+    emoji: '🍵',
+    color: '#e6ded1',
+    descripcion: 'Cuatro tazas de 250 ml en la misma línea de color. Para regalar o para tu mesa de las ocho.',
+    caracteristicas: ['4 tazas de 250 ml', 'Cada una tiene un tono distinto', 'Aptas para microondas', 'Embalaje de regalo']
+  }
+];
+
+/* --- 2. Nombres de las categorías --- */
+const nombresCategoria = {
+  todos: 'Todos',
+  vasos: 'Vasos y tazas',
+  fuente: 'Fuentes y platos',
+  decoracion: 'Decoración',
+  regalos: 'Regalos'
+};
+
+/* --- 3. Dibuja un producto en la grilla --- */
+function crearTarjeta(producto){
+  return `
+    <article class="producto" data-id="${producto.id}">
+      <div class="imagen" style="background:${producto.color}">
+        ${producto.emoji}
+        ${producto.nuevo ? '<span class="marca-agua">Nuevo</span>' : ''}
+      </div>
+      <div class="info">
+        <h3>${producto.nombre}</h3>
+        <div class="categoria">${nombresCategoria[producto.categoria]}</div>
+        <div class="precio">
+          $${producto.precio.toLocaleString('es-CL')}
+          <span class="consultar">Consultar por WhatsApp</span>
+        </div>
+      </div>
+    </article>
+  `;
+}
+
+/* --- 4. Dibuja la grilla completa --- */
+function mostrarProductos(categoria = 'todos'){
+  const grilla = document.getElementById('grilla');
+
+  // Filtra según la categoría seleccionada
+  const lista = categoria === 'todos'
+    ? productos
+    : productos.filter(p => p.categoria === categoria);
+
+  if (lista.length === 0){
+    grilla.innerHTML = '<div class="vacio">No hay piezas en esta categoría todavía.</div>';
+    return;
+  }
+
+  grilla.innerHTML = lista.map(crearTarjeta).join('');
+}
+
+/* --- 5. Filtros --- */
+document.getElementById('filtros').addEventListener('click', evento => {
+  const boton = evento.target.closest('.filtro');
+  if (!boton) return;
+
+  // Marca el filtro activo
+  document.querySelectorAll('.filtro').forEach(f => f.classList.remove('activo'));
+  boton.classList.add('activo');
+
+  mostrarProductos(boton.dataset.cat);
+});
+
+/* --- 6. Modal de detalle --- */
+const modalFondo  = document.getElementById('modalFondo');
+const modalImagen = document.getElementById('modalImagen');
+const modalInfo   = document.getElementById('modalInfo');
+
+function abrirModal(id){
+  const producto = productos.find(p => p.id === id);
+  if (!producto) return;
+
+  modalImagen.style.background = producto.color;
+  modalImagen.textContent = producto.emoji;
+
+  modalInfo.innerHTML = `
+    <h2>${producto.nombre}</h2>
+    <div class="categoria">${nombresCategoria[producto.categoria]}</div>
+    <div class="precio">
+      $${producto.precio.toLocaleString('es-CL')}
+      <small>Los envíos se cotizan aparte</small>
+    </div>
+    <div class="descripcion">${producto.descripcion}</div>
+    <ul class="caracteristicas">
+      ${producto.caracteristicas.map(c => `<li>${c}</li>`).join('')}
+    </ul>
+    <a href="https://wa.me/56987654321?text=${encodeURIComponent(`Hola! Me interesa la pieza "${producto.nombre}" ($${producto.precio.toLocaleString('es-CL')}). ¿Está disponible?`)}"
+       class="btn-whatsapp" target="_blank" rel="noopener">
+       💬 Consultar por WhatsApp
+    </a>
+    <div class="nota-compra">Te respondo personalmente durante el día</div>
+  `;
+
+  modalFondo.classList.add('visible');
+  document.body.style.overflow = 'hidden';   // bloquea el scroll de fondo
+}
+
+function cerrarModal(){
+  modalFondo.classList.remove('visible');
+  document.body.style.overflow = '';
+}
+
+/* Clic en cualquier producto abre su detalle */
+document.getElementById('grilla').addEventListener('click', evento => {
+  const tarjeta = evento.target.closest('.producto');
+  if (tarjeta) abrirModal(Number(tarjeta.dataset.id));
+});
+
+document.getElementById('modalCerrar').addEventListener('click', cerrarModal);
+modalFondo.addEventListener('click', evento => {
+  if (evento.target === modalFondo) cerrarModal();   // clic en el fondo oscuro
+});
+
+/* Cierra con la tecla Escape */
+document.addEventListener('keydown', evento => {
+  if (evento.key === 'Escape') cerrarModal();
+});
+
+/* --- 7. Producto directo por URL ---
+   Si alguien comparte producto.html?id=3, se abre ese producto.
+   Esta es la técnica para que puedas mandar un link
+   específico de un producto por WhatsApp. */
+const idDeUrl = new URLSearchParams(location.search).get('id');
+if (idDeUrl) {
+  mostrarProductos();
+  abrirModal(Number(idDeUrl));
+}
+
+/* --- 8. Menú móvil --- */
+const botonMenu = document.getElementById('botonMenu');
+const menu      = document.getElementById('menu');
+botonMenu.addEventListener('click', () => menu.classList.toggle('abierto'));
+menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => menu.classList.remove('abierto')));
+
+/* --- Dibuja la grilla al cargar --- */
+mostrarProductos();
+</script>
+
+</body>
+</html>

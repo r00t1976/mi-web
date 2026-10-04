@@ -1,0 +1,40 @@
+# ROBOTS.TXT — EJEMPLO 4
+# ============================================================
+# Le dice a los buscadores qué pueden o no pueden ver de tu sitio.
+#
+# CÓMO USARLO:
+# Súbelo a la raíz de tu dominio: https://tusitio.cl/robots.txt
+#
+# QUÉ SIGNIFICA CADA LÍNEA:
+#   User-agent: A quién se aplica la regla
+#   Allow:     Puedes ver esta carpeta
+#   Disallow:  No puedes ver esta carpeta
+#   Sitemap:   Dónde está tu mapa del sitio
+# ============================================================
+
+# Permitir que Google rastree todo el sitio
+User-agent: *
+Allow: /
+
+# Páginas que NO deben aparecer en Google.
+# Fíjate que igual se pueden abrir si alguien tiene el link:
+# esto es para buscadores, no para personas.
+Disallow: /gracias.html
+Disallow: /carrito.html
+Disallow: /checkout.html
+Disallow: /panel/
+
+# Este es el que importa para no regalar tu trabajo.
+# Si guardas archivos de clientes en /privado/, Google no los verá.
+Disallow: /privado/
+Disallow: /borradores/
+
+# Bloquear robots malintencionados que copian tu sitio entero
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+# Le dice a Google dónde encontrar el sitemap
+Sitemap: https://www.estudiohernandez.cl/sitemap.xml

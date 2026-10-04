@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taller El Tornillo — Mecánica y mantención en Santiago</title>
+<meta name="description" content="Taller mecánico en Providencia. Mantención de vehículos, cambio de aceites, kawell. Atención el mismo día. Servicio a domicilio.">
+
+<style>
+/* ============================================================
+   EJEMPLO 1: ONE-PAGE
+   ============================================================
+   Toda la información en una sola página, dividida en
+   secciones con identificadores (id). El menú son "anclas":
+   cada enlace salta a una sección.
+
+   Para modificar este archivo:
+   - Los DATOS del negocio están al inicio del <body>
+   - Los COLORES están en la variable :root
+   - Cada sección es un <section> con su id
+   ============================================================ */
+
+:root{
+  /* --- Cambia estos colores para ver cómo funciona --- */
+  --azul:      #1a3a5c;
+  --azul-claro:#2c5f8f;
+  --naranja:   #e8590c;
+  --gris:      #5c6773;
+  --gris-claro:#f6f8fa;
+  --blanco:    #ffffff;
+  --texto:     #1a1f26;
+  --sombra:    0 2px 8px rgba(0,0,0,.08);
+  --radio:     8px;
+  --max:       1100px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  color:var(--texto);line-height:1.6;background:var(--blanco);
+}
+img{max-width:100%;display:block}
+a{color:var(--azul-claro);text-decoration:none}
+ul{list-style:none}
+
+/* ---------- CONTENEDOR: centra el contenido ---------- */
+.contenedor{
+  width:100%;max-width:var(--max);
+  margin:0 auto;padding:0 20px;
+}
+
+/* ---------- ENCABEZADO FIJO ---------- */
+.encabezado{
+  position:sticky;top:0;z-index:100;
+  background:var(--azul);color:var(--blanco);
+  box-shadow:var(--sombra);
+}
+.encabezado .contenedor{
+  display:flex;align-items:center;justify-content:space-between;
+  min-height:70px;
+}
+.logo{font-size:21px;font-weight:700;color:var(--blanco)}
+.logo span{color:var(--naranja)}
+
+/* ---------- MENÚ ---------- */
+.menu{display:flex;gap:26px}
+.menu a{
+  color:var(--blanco);font-size:15px;font-weight:500;
+  padding:6px 0;border-bottom:2px solid transparent;
+  transition:border-color .2s;
+}
+.menu a:hover{border-bottom-color:var(--naranja)}
+
+/* Botón hamburguesa (solo visible en móvil) */
+.boton-menu{
+  display:none;background:none;border:none;
+  color:var(--blanco);font-size:26px;cursor:pointer;
+}
+
+/* ---------- PORTADA ---------- */
+.portada{
+  background:linear-gradient(135deg,var(--azul) 0%,var(--azul-claro) 100%);
+  color:var(--blanco);text-align:center;
+  padding:90px 20px;
+}
+.portada h1{font-size:42px;margin-bottom:16px;line-height:1.2}
+.portada p{font-size:19px;opacity:.92;max-width:640px;margin:0 auto 30px}
+.btn{
+  display:inline-block;background:var(--naranja);color:var(--blanco);
+  padding:14px 32px;border-radius:var(--radio);
+  font-weight:600;font-size:16px;
+  transition:transform .2s,box-shadow .2s;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(232,89,12,.35)}
+.btn-sec{
+  background:transparent;color:var(--blanco);
+  border:2px solid var(--blanco);
+}
+.btn-sec:hover{background:var(--blanco);color:var(--azul);box-shadow:none}
+
+/* ---------- SECCIONES ---------- */
+.seccion{padding:70px 0}
+.seccion.alterna{background:var(--gris-claro)}
+.titulo{text-align:center;margin-bottom:44px}
+.titulo h2{font-size:32px;color:var(--azul);margin-bottom:10px}
+.titulo p{color:var(--gris);font-size:17px}
+
+/* ---------- REJILLA DE SERVICIOS ---------- */
+.rejilla{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
+  gap:24px;
+}
+.tarjeta{
+  background:var(--blanco);border:1px solid #e4e9ee;
+  border-radius:var(--radio);padding:28px 24px;
+  transition:transform .2s,box-shadow .2s;
+}
+.tarjeta:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
+.tarjeta .icono{font-size:34px;margin-bottom:14px;display:block}
+.tarjeta h3{font-size:19px;color:var(--azul);margin-bottom:8px}
+.tarjeta p{color:var(--gris);font-size:15px}
+
+/* ---------- NOSOTROS ---------- */
+.dos-col{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:50px;align-items:center;
+}
+.dos-col .texto p{margin-bottom:14px;color:#3d4753}
+.lista-datos{display:flex;flex-direction:column;gap:14px}
+.dato{display:flex;gap:12px;align-items:flex-start}
+.dato .punto{
+  background:var(--naranja);color:var(--blanco);
+  width:22px;height:22px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:700;flex-shrink:0;margin-top:2px;
+}
+.dato strong{color:var(--azul)}
+
+/* ---------- PRECIOS ---------- */
+.precios .rejilla{max-width:880px;margin:0 auto}
+.plan{
+  background:var(--blanco);border:2px solid #e4e9ee;
+  border-radius:var(--radio);padding:32px 26px;text-align:center;
+}
+.plan.destacado{
+  border-color:var(--naranja);
+  box-shadow:0 8px 28px rgba(232,89,12,.14);
+  transform:scale(1.03);
+}
+.plan h3{font-size:20px;color:var(--azul);margin-bottom:6px}
+.plan .valor{font-size:42px;font-weight:700;color:var(--naranja);margin:14px 0 4px}
+.plan .valor small{font-size:15px;color:var(--gris);font-weight:400;display:block}
+.plan ul{text-align:left;margin:22px 0}
+.plan li{
+  padding:9px 0;border-bottom:1px solid #eef2f5;
+  color:#3d4753;font-size:15px;
+}
+.plan li:last-child{border-bottom:none}
+.plan li::before{content:"✓";color:var(--naranja);font-weight:700;margin-right:10px}
+.etiqueta{
+  display:inline-block;background:var(--naranja);color:var(--blanco);
+  padding:4px 14px;border-radius:20px;font-size:12px;
+  font-weight:700;letter-spacing:.4px;margin-bottom:10px;
+}
+
+/* ---------- TESTIMONIOS ---------- */
+.testimonio{
+  background:var(--blanco);border-radius:var(--radio);
+  padding:26px;box-shadow:var(--sombra);
+}
+.testimonio .estrellas{color:var(--naranja);margin-bottom:10px}
+.testimonio p{font-style:italic;color:#3d4753;margin-bottom:14px}
+.testimonio .autor{font-weight:600;color:var(--azul);font-size:14px}
+
+/* ---------- CONTACTO ---------- */
+.contacto{background:var(--azul);color:var(--blanco)}
+.contacto .titulo h2{color:var(--blanco)}
+.contacto .titulo p{color:#b8c8d8}
+.contacto .rejilla{max-width:900px}
+.info-item{text-align:center}
+.info-item .icono{font-size:30px;margin-bottom:10px;display:block}
+.info-item h4{font-size:16px;margin-bottom:6px}
+.info-item p{color:#b8c8d8;font-size:15px}
+.info-item a{color:var(--blanco);text-decoration:underline}
+
+/* ---------- FORMULARIO ---------- */
+.formulario{
+  background:var(--blanco);border-radius:var(--radio);
+  padding:30px;max-width:640px;margin:0 auto;
+}
+.campo{margin-bottom:18px}
+.campo label{display:block;font-size:14px;font-weight:600;margin-bottom:7px;color:#3d4753}
+.campo input,.campo select,.campo textarea{
+  width:100%;padding:12px 14px;border:1px solid #d6dde4;
+  border-radius:6px;font-size:15px;font-family:inherit;
+  transition:border-color .2s;
+}
+.campo input:focus,.campo select:focus,.campo textarea:focus{
+  outline:none;border-color:var(--azul-claro);
+}
+.campo textarea{resize:vertical;min-height:110px}
+.campo .error{color:#c92a2a;font-size:13px;margin-top:5px;display:none}
+.campo.invalido input{border-color:#c92a2a}
+.campo.invalido .error{display:block}
+.formulario button{
+  width:100%;background:var(--naranja);color:var(--blanco);
+  border:none;padding:15px;border-radius:var(--radio);
+  font-size:16px;font-weight:600;cursor:pointer;font-family:inherit;
+}
+.formulario button:hover{background:#d14a08}
+.mensaje-ok{
+  display:none;background:#d3f9d8;color:#2b8a3e;
+  padding:14px;border-radius:6px;margin-bottom:18px;font-size:15px;
+}
+.mensaje-ok.visible{display:block}
+
+/* ---------- PIE ---------- */
+.pie{
+  background:#12263c;color:#9db0c4;
+  padding:30px 0;text-align:center;font-size:14px;
+}
+.pie a{color:#9db0c4}
+
+/* ---------- RESPONSIVO ---------- */
+@media (max-width:820px){
+  .boton-menu{display:block}
+  .menu{
+    position:absolute;top:70px;left:0;right:0;
+    background:var(--azul);flex-direction:column;gap:0;
+    max-height:0;overflow:hidden;transition:max-height .3s;
+  }
+  .menu.abierto{max-height:340px;box-shadow:0 8px 20px rgba(0,0,0,.2)}
+  .menu a{padding:15px 24px;border-bottom:1px solid rgba(255,255,255,.1)}
+  .dos-col{grid-template-columns:1fr;gap:30px}
+  .portada h1{font-size:32px}
+  .portada{padding:64px 20px}
+  .plan.destacado{transform:none}
+}
+@media (max-width:520px){
+  .seccion{padding:52px 0}
+  .titulo h2{font-size:26px}
+  .rejilla{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<!-- ============================================================
+     DATOS DEL NEGOCIO
+     Cambia estos textos para que el ejemplo sea del negocio tuyo
+     ============================================================ -->
+
+<header class="encabezado">
+  <div class="contenedor">
+    <div class="logo">El <span>Tornillo</span></div>
+    <button class="boton-menu" id="botonMenu" aria-label="Abrir menú">☰</button>
+    <nav class="menu" id="menu">
+      <a href="#servicios">Servicios</a>
+      <a href="#nosotros">Nosotros</a>
+      <a href="#precios">Precios</a>
+      <a href="#testimonios">Testimonios</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+  </div>
+</header>
+
+<section class="portada">
+  <h1>Mecánica a domicilio en Santiago</h1>
+  <p>Mantención de tu vehículo en 40 minutos, sin salir de tu casa. desde 2010 atendiendo a más de 3.000 vehículos en toda la Región Metropolitana.</p>
+  <a href="#contacto" class="btn">Agendar mantención</a>
+</section>
+
+<section class="seccion" id="servicios">
+  <div class="contenedor">
+    <div class="titulo">
+      <h2>Servicios</h2>
+      <p>Todo lo que necesitas para tu vehículo, en un solo lugar</p>
+    </div>
+    <div class="rejilla">
+      <div class="tarjeta">
+        <span class="icono">🔧</span>
+        <h3>Mantención general</h3>
+        <p>Cambio de aceite, filtros, revisión de frenos y niveles. El servicio completo que tu auto necesita cada 10.000 km.</p>
+      </div>
+      <div class="tarjeta">
+        <span class="icono">⚡</span>
+        <h3>Cambio de batería</h3>
+        <p>Diagnóstico gratuito y cambio en el momento. Baterías con 24 meses de garantía.</p>
+      </div>
+      <div class="tarjeta">
+        <span class="icono">❄️</span>
+        <h3>Kawell y frenos</h3>
+        <p>Recarga de gas refrigerante y cambio de pastillas. Atendemos la mayoría de marcas.</p>
+      </div>
+      <div class="tarjeta">
+        <span class="icono">🛞</span>
+        <h3>Cambio de neumáticos</h3>
+        <p>Rotación, balanceo y cambio de neumáticos. Trabajamos con las principales marcas importadas.</p>
+      </div>
+      <div class="tarjeta">
+        <span class="icono">💨</span>
+        <h3>Revisión de emisiones</h3>
+        <p>Preparación completa para la prueba de emisiones. Recordatorio automático cuando se acerca tu fecha.</p>
+      </div>
+      <div class="tarjeta">
+        <span class="icono">🚗</span>
+        <h3>Servicio a domicilio</h3>
+        <p>Vamos a tu casa u oficina en toda la Región Metropolitana. Sin costo de desplazamiento sobre $25.000.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="seccion alterna" id="nosotros">
+  <div class="contenedor">
+    <div class="dos-col">
+      <div class="texto">
+        <div class="titulo" style="text-align:left">
+          <h2>Quiénes somos</h2>
+        </div>
+        <p>El Tornillo nació en 2010 en un garaje de Providencia, con dos MECánicos y una idea simple: si el mecánico va a tu casa, tú no pierdes la mañana.</p>
+        <p>Hoy somos un equipo de 9 técnicos que cubren toda la Región Metropolitana, con 15 años de experiencia promedio y licencia de mecánico vigente.</p>
+      </div>
+      <div class="lista-datos">
+        <div class="dato">
+          <span class="punto">1</span>
+          <div><strong>15 años de experiencia</strong><br>En el mismo rubro, sin_interruptiones desde 2010.</div>
+        </div>
+        <div class="dato">
+          <span class="punto">2</span>
+          <div><strong>3.000+ vehículos atendidos</strong><br>Con garantía escrita en cada trabajo.</div>
+        </div>
+        <div class="dato">
+          <span class="punto">3</span>
+          <div><strong>Tiempo promedio: 40 minutos</strong><br>Llegamos, revisamos y no te cobramos si no era necesario.</div>
+        </div>
+        <div class="dato">
+          <span class="punto">4</span>
+          <div><strong>Precio cerrado</strong><br>Te decimos el costo antes de empezar. Sin sorpresas después.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="seccion precios" id="precios">
+  <div class="contenedor">
+    <div class="titulo">
+      <h2>Planes</h2>
+      <p>Precios cerrados, sin letra chica</p>
+    </div>
+    <div class="rejilla">
+      <div class="plan">
+        <h3>Mantención básica</h3>
+        <div class="valor">$45.990<small>pago único</small></div>
+        <ul>
+          <li>Cambio de aceite sintético</li>
+          <li>Filtro de aire y aceite</li>
+          <li>Revisión de niveles</li>
+          <li>Diagnóstico computarizado</li>
+        </ul>
+        <a href="#contacto" class="btn btn-sec" style="width:100%">Agendar</a>
+      </div>
+      <div class="plan destacado">
+        <span class="etiqueta">MÁS PEDIDO</span>
+        <h3>Mantención completa</h3>
+        <div class="valor">$79.990<small>pago único</small></div>
+        <ul>
+          <li>Todo lo del plan básico</li>
+          <li>Filtro de aire de habitáculo</li>
+          <li>Revisión de frenos</li>
+          <li>Limpieza de inyectores</li>
+          <li>Garantía de 3 meses</li>
+        </ul>
+        <a href="#contacto" class="btn" style="width:100%">Agendar</a>
+      </div>
+      <div class="plan">
+        <h3>Mantención premium</h3>
+        <div class="valor">$119.990<small>pago único</small></div>
+        <ul>
+          <li>Todo lo del plan completo</li>
+          <li>Cambio de filtros de líquido refrigerante</li>
+          <li>Alineación y balanceo</li>
+          <li>Revisión de suspensión</li>
+          <li>Garantía de 6 meses</li>
+        </ul>
+        <a href="#contacto" class="btn btn-sec" style="width:100%">Agendar</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="seccion alterna" id="testimonios">
+  <div class="contenedor">
+    <div class="titulo">
+      <h2>Testimonios</h2>
+      <p>Lo que dicen nuestros clientes</p>
+    </div>
+    <div class="rejilla">
+      <div class="testimonio">
+        <div class="estrellas">★★★★★</div>
+        <p>"Llamé un martes a las 8 de la mañana y a las 9 ya estaba hecho. El precio que me dijeron por teléfono fue exactamente el que cobró. Eso no pasa nunca."</p>
+        <div class="autor">Carla M. — Providencia</div>
+      </div>
+      <div class="testimonio">
+        <div class="estrellas">★★★★★</div>
+        <p>"Mi auto es de 2014 y lo han mantenido perfecto. Además siempre me recuerdan la mantención antes de que se venza. Muy buena onda."</p>
+        <div class="autor">Rodrigo V. — Las Condes</div>
+      </div>
+      <div class="testimonio">
+        <div class="estrellas">★★★★★</div>
+        <p>"Me cambiaron la batería en la oficina en 20 minutos. Sin salir de mi trabajo, sin mover el auto. Excelente servicio."</p>
+        <div class="autor">Ana P. — Vitacura</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="seccion contacto" id="contacto">
+  <div class="contenedor">
+    <div class="titulo">
+      <h2>Contacto</h2>
+      <p>Agenda tu mantención o resuelve tus dudas</p>
+    </div>
+    <div class="rejilla" style="margin-bottom:40px">
+      <div class="info-item">
+        <span class="icono">📍</span>
+        <h4>Dirección</h4>
+        <p>Av. Manuel Antonio Matta 1234<br>Providencia, Santiago</p>
+      </div>
+      <div class="info-item">
+        <span class="icono">📞</span>
+        <h4>Teléfono</h4>
+        <p><a href="tel:+56912345678">+56 9 1234 5678</a></p>
+      </div>
+      <div class="info-item">
+        <span class="icono">📧</span>
+        <h4>Email</h4>
+        <p><a href="mailto:contacto@eltornillo.cl">contacto@eltornillo.cl</a></p>
+      </div>
+      <div class="info-item">
+        <span class="icono">🕐</span>
+        <h4>Horario</h4>
+        <p>Lunes a viernes 8:30–18:30<br>Sábados 9:00–14:00</p>
+      </div>
+    </div>
+
+    <div class="formulario">
+      <div class="mensaje-ok" id="mensajeOk">
+        ✓ Solicitud enviada. Te contactamos en menos de 2 horas.
+      </div>
+      <form id="formulario" novalidate>
+        <div class="campo">
+          <label for="nombre">Nombre *</label>
+          <input type="text" id="nombre" name="nombre" placeholder="Tu nombre completo">
+          <span class="error">Por favor escribe tu nombre</span>
+        </div>
+        <div class="campo">
+          <label for="email">Email *</label>
+          <input type="email" id="email" name="email" placeholder="tu@email.cl">
+          <span class="error">Escribe un email válido</span>
+        </div>
+        <div class="campo">
+          <label for="telefono">Teléfono *</label>
+          <input type="tel" id="telefono" name="telefono" placeholder="+56 9 1234 5678">
+          <span class="error">Escribe un teléfono válido</span>
+        </div>
+        <div class="campo">
+          <label for="vehiculo">Vehículo</label>
+          <input type="text" id="vehiculo" name="vehiculo" placeholder="Marca, modelo y año">
+        </div>
+        <div class="campo">
+          <label for="servicio">Servicio que necesitas</label>
+          <select id="servicio" name="servicio">
+            <option value="">Selecciona una opción</option>
+            <option>Mantención general</option>
+            <option>Cambio de batería</option>
+            <option>Kawell y frenos</option>
+            <option>Cambio de neumáticos</option>
+            <option>Revisión de emisiones</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        <div class="campo">
+          <label for="mensaje">Mensaje</label>
+          <textarea id="mensaje" name="mensaje" placeholder="Cuéntanos brevemente qué necesitas"></textarea>
+        </div>
+        <button type="submit">Enviar solicitud</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer class="pie">
+  <div class="contenedor">
+    <p>© 2026 Taller El Tornillo · Todos los derechos reservados</p>
+    <p><a href="#">Términos y condiciones</a> · <a href="#">Política de privacidad</a></p>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   JAVASCRIPT — EJEMPLO 1
+   ============================================================ */
+
+/* --- 1. Menú móvil ---
+   Alterna la clase "abierto" que el CSS usa para mostrar/ocultar */
+const botonMenu = document.getElementById('botonMenu');
+const menu      = document.getElementById('menu');
+
+botonMenu.addEventListener('click', () => {
+  menu.classList.toggle('abierto');
+});
+
+/* Cierra el menú al hacer clic en cualquier enlace */
+menu.querySelectorAll('a').forEach(enlace => {
+  enlace.addEventListener('click', () => menu.classList.remove('abierto'));
+});
+
+
+/* --- 2. Validación del formulario ---
+   Revisa cada campo y muestra el error si corresponde */
+const formulario   = document.getElementById('formulario');
+const mensajeOk    = document.getElementById('mensajeOk');
+
+// Patrón para email
+const regexEmail  = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i;
+// Patrón para teléfono chileno: +56 seguido de 8-9 dígitos, con espacios
+const regexTel    = /^\+?56[\s-]?\d{1,2}[\s-]?\d{4}[\s-]?\d{4}$/;
+
+const reglas = {
+  nombre:   valor => valor.trim().length >= 3,
+  email:    valor => regexEmail.test(valor.trim()),
+  telefono: valor => regexTel.test(valor.trim())
+};
+
+formulario.addEventListener('submit', evento => {
+  evento.preventDefault();   // evita que se recargue la página
+  let valido = true;
+
+  // Revisa los campos con regla definida
+  for (const [id, validar] of Object.entries(reglas)) {
+    const input  = document.getElementById(id);
+    const campo  = input.closest('.campo');
+    const correcto = validar(input.value);
+
+    campo.classList.toggle('invalido', !correcto);
+    if (!correcto) valido = false;
+  }
+
+  if (valido) {
+    mensajeOk.classList.add('visible');
+    formulario.reset();
+    // Quita los bordes rojos de los campos
+    document.querySelectorAll('.campo.invalido').forEach(c => c.classList.remove('invalido'));
+  } else {
+    // Lleva al usuario al primer campo con problema
+    const primero = formulario.querySelector('.campo.invalido input');
+    if (primero) primero.focus();
+  }
+});
+
+/* Quita el error mientras el usuario escribe */
+formulario.querySelectorAll('input').forEach(input => {
+  input.addEventListener('input', () => {
+    input.closest('.campo').classList.remove('invalido');
+  });
+});
+</script>
+
+</body>
+</html>

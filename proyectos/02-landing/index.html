@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Curso de JS Intensivo — Inscripción abierta</title>
+<meta name="description" content="Curso presencial de JavaScript en Santiago. 8 semanas, grupos de 15. Próximo inicio: 6 de octubre. Cupos limitados.">
+
+<style>
+/* ============================================================
+   EJEMPLO 2: LANDING PAGE DE CONVERSIÓN
+   ============================================================
+   Diferencia con el ejemplo 1: TODO está diseñado para que el
+   visitante haga UNA sola acción (comprar el curso).
+
+   Técnicas que verás acá y no en el ejemplo 1:
+   - Cuenta regresiva para generar urgencia
+   - Formulario con validación en tiempo real
+   - Contador animado de cupos disponibles
+   - Preguntas frecuentes con acordeón
+   - Número de teléfono flotante
+   ============================================================ */
+
+:root{
+  --violeta:#5b2c9d;
+  --violeta-claro:#7d43c4;
+  --amarillo:#ffc107;
+  --verde:#2f9e44;
+  --rojo:#e03131;
+  --gris:#5c6773;
+  --gris-claro:#f7f5fb;
+  --blanco:#fff;
+  --texto:#1a1f26;
+  --radio:10px;
+  --max:1080px;
+  --sombra:0 4px 20px rgba(91,44,157,.12);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  color:var(--texto);line-height:1.65;background:var(--blanco);
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+.contenedor{width:100%;max-width:var(--max);margin:0 auto;padding:0 20px}
+
+/* ---------- BARRA DE URGENCIA ---------- */
+.barra-urgencia{
+  background:var(--amarillo);color:#4a3400;
+  text-align:center;padding:10px 20px;font-size:15px;font-weight:600;
+}
+.barra-urgencia strong{color:var(--rojo)}
+
+/* ---------- ENCABEZADO ---------- */
+.encabezado{background:var(--blanco);box-shadow:var(--sombra);position:sticky;top:0;z-index:100}
+.encabezado .contenedor{display:flex;align-items:center;justify-content:space-between;min-height:68px}
+.logo{font-size:20px;font-weight:800;color:var(--violeta)}
+.logo span{color:var(--violeta-claro)}
+.boton-menu{display:none;background:none;border:none;font-size:26px;cursor:pointer;color:var(--violeta)}
+.menu{display:flex;gap:24px;align-items:center}
+.menu a{font-size:15px;color:#3d4753;font-weight:500}
+.menu a:hover{color:var(--violeta)}
+.menu .btn-mini{
+  background:var(--violeta);color:var(--blanco);
+  padding:10px 22px;border-radius:24px;font-weight:600;
+}
+.menu .btn-mini:hover{background:var(--violeta-claro);color:var(--blanco)}
+
+/* ---------- HERO ---------- */
+.hero{
+  background:linear-gradient(150deg,var(--violeta) 0%,#341a5c 100%);
+  color:var(--blanco);text-align:center;padding:70px 20px 80px;
+}
+.hero .etiqueta{
+  display:inline-block;background:rgba(255,255,255,.16);
+  padding:7px 18px;border-radius:20px;font-size:14px;
+  font-weight:600;margin-bottom:22px;backdrop-filter:blur(4px);
+}
+.hero h1{font-size:44px;line-height:1.15;margin-bottom:20px;max-width:800px;margin-inline:auto}
+.hero h1 .destacado{color:var(--amarillo)}
+.hero p.sub{font-size:19px;opacity:.9;max-width:620px;margin:0 auto 32px}
+.hero .botones{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn{
+  display:inline-block;padding:15px 34px;border-radius:var(--radio);
+  font-weight:700;font-size:16px;transition:transform .2s,box-shadow .2s;
+  cursor:pointer;border:none;font-family:inherit;
+}
+.btn-primario{background:var(--amarillo);color:#4a3400}
+.btn-primario:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(255,193,7,.4)}
+.btn-claro{background:var(--blanco);color:var(--violeta)}
+.btn-claro:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(255,255,255,.25)}
+.btn-violeta{background:var(--violeta);color:var(--blanco)}
+.btn-violeta:hover{background:var(--violeta-claro);color:var(--blanco)}
+
+/* ---------- CONTADOR REGRESIVO ---------- */
+.reloj{
+  display:flex;gap:14px;justify-content:center;margin-top:44px;flex-wrap:wrap;
+}
+.caja-reloj{
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);
+  border-radius:var(--radio);padding:16px 10px;min-width:78px;
+  backdrop-filter:blur(4px);
+}
+.caja-reloj .num{
+  font-size:34px;font-weight:800;color:var(--amarillo);
+  line-height:1;font-variant-numeric:tabular-nums;
+}
+.caja-reloj .txt{
+  font-size:11px;text-transform:uppercase;letter-spacing:1px;
+  opacity:.8;margin-top:6px;
+}
+
+/* ---------- BARRA DE CUPOS ---------- */
+.cupos{max-width:520px;margin:36px auto 0}
+.cupos .etiqueta-cupos{
+  display:flex;justify-content:space-between;font-size:14px;
+  margin-bottom:8px;color:var(--blanco);
+}
+.cupos .etiqueta-cupos strong{color:var(--amarillo)}
+.barra{height:11px;background:rgba(255,255,255,.2);border-radius:6px;overflow:hidden}
+.barra .relleno{
+  height:100%;background:linear-gradient(90deg,var(--amarillo),#ff8f00);
+  border-radius:6px;width:0;transition:width 1.5s ease;
+}
+.aviso-cupos{
+  color:#ffd8a8;font-size:13.5px;margin-top:10px;
+  display:flex;align-items:center;gap:6px;justify-content:center;
+}
+
+/* ---------- SECCIONES ---------- */
+.seccion{padding:76px 0}
+.seccion.alterna{background:var(--gris-claro)}
+.centrado{text-align:center;max-width:660px;margin:0 auto 46px}
+.centrado h2{font-size:33px;color:var(--violeta);margin-bottom:12px;line-height:1.25}
+.centrado p{color:var(--gris);font-size:17px}
+
+/* ---------- LO QUE APRENDES ---------- */
+.rejilla{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:22px}
+.caja{
+  background:var(--blanco);border:1px solid #e9e4f2;
+  border-radius:var(--radio);padding:28px 24px;text-align:center;
+  transition:transform .2s,box-shadow .2s;
+}
+.caja:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
+.caja .icono{font-size:36px;margin-bottom:12px;display:block}
+.caja h3{font-size:18px;color:var(--violeta);margin-bottom:7px}
+.caja p{color:var(--gris);font-size:15px}
+
+/* ---------- PROGRAMA ---------- */
+.programa{max-width:800px;margin:0 auto}
+.modulo{
+  display:flex;gap:22px;align-items:flex-start;
+  background:var(--blanco);border-radius:var(--radio);
+  padding:24px 26px;margin-bottom:14px;
+  border-left:5px solid var(--violeta-claro);
+}
+.modulo .num{
+  background:var(--violeta);color:var(--blanco);
+  width:46px;height:46px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;font-weight:800;flex-shrink:0;
+}
+.modulo h4{font-size:18px;color:var(--violeta);margin-bottom:5px}
+.modulo p{color:var(--gris);font-size:15px}
+.modulo .duracion{
+  display:inline-block;background:var(--gris-claro);color:var(--gris);
+  padding:3px 11px;border-radius:12px;font-size:12.5px;font-weight:600;margin-top:8px;
+}
+
+/* ---------- PRECIO ---------- */
+.caja-precio{
+  max-width:460px;margin:0 auto;background:var(--blanco);
+  border:3px solid var(--violeta);border-radius:16px;
+  padding:38px 32px;text-align:center;box-shadow:var(--sombra);
+}
+.precio-anterior{
+  color:var(--gris);text-decoration:line-through;font-size:20px;margin-bottom:2px;
+}
+.precio-actual{font-size:56px;font-weight:800;color:var(--violeta);line-height:1.1}
+.precio-actual small{font-size:19px;color:var(--gris);font-weight:500}
+.precio-cuotas{
+  background:var(--amarillo);color:#4a3400;display:inline-block;
+  padding:7px 16px;border-radius:20px;font-size:14.5px;font-weight:700;margin-top:12px;
+}
+.incluye{text-align:left;margin:28px 0}
+.incluye li{
+  padding:11px 0;border-bottom:1px solid #f0edf6;
+  color:#3d4753;font-size:15.5px;display:flex;gap:11px;align-items:flex-start;
+}
+.incluye li:last-child{border-bottom:none}
+.incluye li::before{content:"✓";color:var(--verde);font-weight:800;flex-shrink:0}
+.garantia{
+  background:#e6fcf5;color:#0b7285;border-radius:8px;
+  padding:13px;font-size:14.5px;margin-top:20px;
+}
+
+/* ---------- TESTIMONIOS ---------- */
+.testimonio{
+  background:var(--blanco);border-radius:var(--radio);
+  padding:26px;box-shadow:var(--sombra);
+}
+.testimonio .estrellas{color:var(--amarillo);margin-bottom:11px;font-size:17px}
+.testimonio p{font-style:italic;color:#3d4753;margin-bottom:15px}
+.testimonio .autor{font-weight:700;color:var(--violeta);font-size:14.5px}
+.testimonio .cargo{color:var(--gris);font-size:13.5px}
+
+/* ---------- PREGUNTAS FRECUENTES (ACORDEÓN) ---------- */
+.faq{max-width:760px;margin:0 auto}
+.pregunta{
+  background:var(--blanco);border:1px solid #e9e4f2;
+  border-radius:var(--radio);margin-bottom:11px;overflow:hidden;
+}
+.pregunta button{
+  width:100%;background:none;border:none;text-align:left;
+  padding:19px 22px;font-size:16.5px;font-weight:600;
+  color:var(--violeta);cursor:pointer;font-family:inherit;
+  display:flex;justify-content:space-between;align-items:center;gap:14px;
+}
+.pregunta button:hover{background:var(--gris-claro)}
+.pregunta .flecha{transition:transform .3s;font-size:20px;flex-shrink:0}
+.pregunta.abierta .flecha{transform:rotate(180deg)}
+.respuesta{
+  max-height:0;overflow:hidden;transition:max-height .3s ease;
+  padding:0 22px;color:var(--gris);font-size:15.5px;
+}
+.pregunta.abierta .respuesta{padding:0 22px 20px;max-height:320px}
+
+/* ---------- FORMULARIO ---------- */
+.formulario{
+  max-width:620px;margin:0 auto;background:var(--blanco);
+  border-radius:var(--radio);padding:34px;box-shadow:var(--sombra);
+}
+.campo{margin-bottom:19px}
+.campo label{display:block;font-size:14px;font-weight:700;margin-bottom:7px;color:#3d4753}
+.campo input,.campo select{
+  width:100%;padding:13px 15px;border:1.5px solid #ddd7e8;
+  border-radius:8px;font-size:15.5px;font-family:inherit;transition:border-color .2s;
+}
+.campo input:focus,.campo select:focus{outline:none;border-color:var(--violeta-claro)}
+.campo input.invalido{border-color:var(--rojo);background:#fff5f5}
+.campo .error{color:var(--rojo);font-size:13.5px;margin-top:5px;display:none}
+.campo.mostrar-error .error{display:block}
+.formulario button{width:100%}
+.seguridad{
+  text-align:center;color:var(--gris);font-size:13.5px;margin-top:16px;
+  display:flex;align-items:center;justify-content:center;gap:7px;
+}
+.mensaje-ok{
+  display:none;background:#d3f9d8;color:#2b8a3e;
+  padding:16px;border-radius:8px;margin-bottom:20px;font-weight:600;text-align:center;
+}
+.mensaje-ok.visible{display:block}
+
+/* ---------- WHATSAPP FLOTANTE ---------- */
+.whatsapp{
+  position:fixed;bottom:24px;right:24px;width:58px;height:58px;
+  background:#25d366;border-radius:50%;display:flex;
+  align-items:center;justify-content:center;font-size:28px;
+  box-shadow:0 5px 18px rgba(37,211,102,.45);z-index:200;
+  transition:transform .2s;
+}
+.whatsapp:hover{transform:scale(1.1)}
+
+/* ---------- PIE ---------- */
+.pie{background:#241040;color:#b9a6d6;text-align:center;padding:32px 0;font-size:14px}
+.pie a{color:#b9a6d6}
+
+/* ---------- RESPONSIVO ---------- */
+@media (max-width:820px){
+  .boton-menu{display:block}
+  .menu{
+    position:absolute;top:68px;left:0;right:0;background:var(--blanco);
+    flex-direction:column;gap:0;align-items:stretch;padding:8px 0;
+    max-height:0;overflow:hidden;transition:max-height .3s;box-shadow:var(--sombra);
+  }
+  .menu.abierto{max-height:400px}
+  .menu a{padding:14px 24px;border-bottom:1px solid #f0edf6}
+  .menu .btn-mini{margin:10px 24px;text-align:center}
+  .hero h1{font-size:32px}
+  .hero{padding:52px 20px 60px}
+  .caja-reloj .num{font-size:27px}
+  .modulo{flex-direction:column;gap:14px;align-items:flex-start}
+}
+@media (max-width:520px){
+  .seccion{padding:54px 0}
+  .centrado h2{font-size:27px}
+  .precio-actual{font-size:46px}
+  .formulario{padding:24px 20px}
+  .whatsapp{width:52px;height:52px;font-size:24px;bottom:18px;right:18px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="barra-urgencia">
+  🔥 Últimos cupos · <strong id="urgenciaTexto"> inscripciones cierran en 2 días</strong>
+</div>
+
+<header class="encabezado">
+  <div class="contenedor">
+    <div class="logo">JS <span>Intensivo</span></div>
+    <button class="boton-menu" id="botonMenu">☰</button>
+    <nav class="menu" id="menu">
+      <a href="#programa">Programa</a>
+      <a href="#precio">Precio</a>
+      <a href="#faq">Preguntas</a>
+      <a href="#inscripcion" class="btn-mini">Inscribirme</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <span class="etiqueta">📅 Inicio: 6 de octubre · Cupos limitados</span>
+  <h1>Aprende JavaScript en <span class="destacado">8 semanas</span> y consigue tu primer trabajo como desarrollador</h1>
+  <p class="sub">Curso presencial en Santiago. Grupos de 15 alumnos. Sin experiencia previa necesaria.</p>
+  <div class="botones">
+    <a href="#inscripcion" class="btn btn-primario">Quiero inscribirme</a>
+    <a href="#programa" class="btn btn-claro">Ver programa</a>
+  </div>
+
+  <!-- Cuenta regresiva -->
+  <div class="reloj" id="reloj">
+    <div class="caja-reloj"><div class="num" id="dias">00</div><div class="txt">Días</div></div>
+    <div class="caja-reloj"><div class="num" id="horas">00</div><div class="txt">Horas</div></div>
+    <div class="caja-reloj"><div class="num" id="minutos">00</div><div class="txt">Min</div></div>
+    <div class="caja-reloj"><div class="num" id="segundos">00</div><div class="txt">Seg</div></div>
+  </div>
+
+  <!-- Barra de cupos -->
+  <div class="cupos">
+    <div class="etiqueta-cupos">
+      <span>Cupos disponibles</span>
+      <span><strong id="cuposRestantes">4</strong> de 15</span>
+    </div>
+    <div class="barra"><div class="relleno" id="rellenoBarra"></div></div>
+    <div class="aviso-cupos">⚠️ Quedan pocos lugares. El curso se llenó en la última edición en 9 días.</div>
+  </div>
+</section>
+
+<section class="seccion" id="aprendes">
+  <div class="contenedor">
+    <div class="centrado">
+      <h2>Lo que vas a aprender</h2>
+      <p>No es un curso teórico. Cada semana escribes código real, con errores reales.</p>
+    </div>
+    <div class="rejilla">
+      <div class="caja"><span class="icono">📦</span><h3>JavaScript moderno</h3><p>Variables, funciones, objetos, arrays y el DOM para modificar páginas de verdad.</p></div>
+      <div class="caja"><span class="icono">🌐</span><h3>HTML y CSS</h3><p>La base visual de toda web. Maquetación, responsive y diseño con grids y flexbox.</p></div>
+      <div class="caja"><span class="icono">⚙️</span><h3>Git y GitHub</h3><p>Control de versiones desde el primer día. Lo que piden en todas las entrevistas técnicas.</p></div>
+      <div class="caja"><span class="icono">🔌</span><h3>Consumo de APIs</h3><p>Conectarte a servicios externos con fetch. Datos reales desde el primer proyecto.</p></div>
+      <div class="caja"><span class="icono">🗄️</span><h3>Bases de datos</h3><p>SQL básico y fundamentos de Node.js para el backend. Tu proyecto final tendrá datos.</p></div>
+      <div class="caja"><span class="icono">💼</span><h3>Primer trabajo</h3><p>Cómo presentarte, qué poner en tu portafolio y cómo responder a una oferta de empleo.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="seccion alterna" id="programa">
+  <div class="contenedor">
+    <div class="centrado">
+      <h2>Programa de 8 semanas</h2>
+      <p>Un módulo por semana. Cada uno termina con un proyecto que funciona.</p>
+    </div>
+    <div class="programa">
+      <div class="modulo">
+        <div class="num">1</div>
+        <div><h4>Variables, funciones y condicionales</h4><p>La gramática del lenguaje.(if, for, funciones, scope).</p><span class="duracion">Semana 1</span></div>
+      </div>
+      <div class="modulo">
+        <div class="num">2</div>
+        <div><h4>Arrays, objetos y métodos</h4><p>map, filter, reduce. Manipular listas de datos con confianza.</p><span class="duracion">Semana 2</span></div>
+      </div>
+      <div class="modulo">
+        <div class="num">3</div>
+        <div><h4>DOM: modificar páginas</h4><p>Hacer que algo ocurra al hacer clic. Eventos, selectores, crear elementos.</p><span class="duracion">Semana 3</span></div>
+      </div>
+      <div class="modulo">
+        <div class="num">4</div>
+        <div><h4>Proyecto 1: portafolio personal</h4><p>Tu primera página real, con formulario y diseño responsive.</p><span class="duracion">Semana 4</span></div>
+      </div>
+      <div class="modulo">
+        <div class="num">5</div>
+        <div><h4>HTML y CSS avanzado</h4><p>Flexbox, grid, animaciones. De "funciona" a "se ve profesional".</p><span class="duracion">Semana 5</span></div>
+      </div>
+      <div class="modulo">
+        <div class="num">6</div>
+        <div><h4>Consumo de APIs con fetch</h4><p>Traer datos de Internet. El clima de tu ciudad, noticias, un catálogo de productos.</p><span class="duracion">Semana 6</span></div>
+      </div>
+      <div class="modulo">
+        <div class="num">7</div>
+        <div><h4>Node.js y SQL</h4><p>El lado del servidor. Guardar datos de verdad, no solo en el navegador.</p><span class="duracion">Semana 7</span></div>
+      </div>
+      <div class="modulo">
+        <div class="num">8</div>
+        <div><h4>Proyecto final + GitHub</h4><p>Una aplicación completa, publicada y documentada. Lista para tu portafolio.</p><span class="duracion">Semana 8</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="seccion" id="precio">
+  <div class="contenedor">
+    <div class="centrado">
+      <h2>Inversión</h2>
+      <p>Un solo pago. 3 meses para cancelar si prefieres.</p>
+    </div>
+    <div class="caja-precio">
+      <div class="precio-anterior">$320.000</div>
+      <div class="precio-actual">$249.000<small> CLP</small></div>
+      <div class="precio-cuotas">o 3 cuotas de $83.000</div>
+      <ul class="incluye">
+        <li>8 sesiones presenciales de 3 horas</li>
+        <li>Material digital y ejercicios</li>
+        <li>Grabación de cada clase</li>
+        <li>Corrección de tareas personalizadas</li>
+        <li>Grupo privado de WhatsApp</li>
+        <li>Certificado de finalización</li>
+        <li>2 sesiones de mentoría 1 a 1 después del curso</li>
+        <li>Acceso al código de los proyectos</li>
+      </ul>
+      <a href="#inscripcion" class="btn btn-violeta" style="width:100%">Reservar mi cupo</a>
+      <div class="garantia">💬 Si no te sirve, devolvemos el 100% en los primeros 7 días.</div>
+    </div>
+  </div>
+</section>
+
+<section class="seccion alterna" id="testimonios">
+  <div class="contenedor">
+    <div class="centrado">
+      <h2>Alumnos de ediciones anteriores</h2>
+      <p>Ya son 3 las ediciones. Esto es lo que cuentan.</p>
+    </div>
+    <div class="rejilla">
+      <div class="testimonio">
+        <div class="estrellas">★★★★★</div>
+        <p>"Llegué sin saber nada de programación. Tres meses después estoy haciendo mantenciones web en una agencia. La diferencia la hizo entender el porqué, no solo memorizar."</p>
+        <div class="autor">Felipe O.</div>
+        <div class="cargo">Desarrollador Jr. · Desde marzo 2026</div>
+      </div>
+      <div class="testimonio">
+        <div class="estrellas">★★★★★</div>
+        <p>"El proyecto final es lo que me contrataron en la entrevista. Estaba publicado en GitHub y el entrevistador lo revisó antes de la reunión."</p>
+        <div class="autor">Camila R.</div>
+        <div class="cargo">Desarrolladora Front-end · Desde enero 2026</div>
+      </div>
+      <div class="testimonio">
+        <div class="estrellas">★★★★★</div>
+        <p>"Valió la pena cada peso. El profe explica con calma y no te apura. Y el grupo de WhatsApp sirve harto para no quedarte pegado."</p>
+        <div class="autor">Sebastián L.</div>
+        <div class="cargo">Ingeniero comercial, ahora en tecnología</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="seccion" id="faq">
+  <div class="contenedor">
+    <div class="centrado">
+      <h2>Preguntas frecuentes</h2>
+      <p>Lo que más nos preguntan por WhatsApp</p>
+    </div>
+    <div class="faq" id="faq">
+      <div class="pregunta">
+        <button>¿Necesito tener computador?<span class="flecha">⌄</span></button>
+        <div class="respuesta">Puedes asistir con tu propio notebook o usar uno del salon. Solo necesitas un equipo con 4 GB de RAM y un navegador actualizado.</div>
+      </div>
+      <div class="pregunta">
+        <button>No tengo experiencia, ¿puedo entrar?<span class="flecha">⌄</span></button>
+        <div class="respuesta">Sí. De hecho, el curso está pensado para gente que parte de cero. Solo necesitas ganas y un computador.</div>
+      </div>
+      <div class="pregunta">
+        <button>¿Dónde se hace?<span class="flecha">⌄</span></button>
+        <div class="respuesta">En calle San Diego 1450, oficina 402, comuna de Santiago. A dos cuadras del metro San Pablo. Estacionamiento disponible.</div>
+      </div>
+      <div class="pregunta">
+        <button>¿Qué pasa si no puedo ir a una sesión?<span class="flecha">⌄</span></button>
+        <div class="respuesta">Cada clase queda grabada y disponible en 24 horas. Puedes recuperarla sin costo en un horario acordado con el profesor.</div>
+      </div>
+      <div class="pregunta">
+        <button>¿Entregan certificado?<span class="flecha">⌄</span></button>
+        <div class="respuesta">Sí, certificado de finalización con horas de asistencia, al completar el 80% de las clases y aprobar el proyecto final.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="seccion alterna" id="inscripcion" style="background:var(--violeta)">
+  <div class="contenedor">
+    <div class="centrado">
+      <h2 style="color:#fff">Reserva tu cupo</h2>
+      <p style="color:#d9c8f0">Completa el formulario y te confirmamos por WhatsApp en menos de 2 horas.</p>
+    </div>
+    <div class="formulario">
+      <div class="mensaje-ok" id="mensajeOk">
+        ✓ ¡Reserva registrada! Revisa tu correo, te enviamos los datos de pago.
+      </div>
+      <form id="formulario" novalidate>
+        <div class="campo">
+          <label for="nombre">Nombre completo *</label>
+          <input type="text" id="nombre" placeholder="Ej: María González">
+          <span class="error">Escribe tu nombre completo</span>
+        </div>
+        <div class="campo">
+          <label for="email">Email *</label>
+          <input type="email" id="email" placeholder="tu@email.cl">
+          <span class="error">Revisa el formato de tu email</span>
+        </div>
+        <div class="campo">
+          <label for="whatsapp">WhatsApp *</label>
+          <input type="tel" id="whatsapp" placeholder="+56 9 1234 5678">
+          <span class="error">Formato chileno: +56 9 XXXX XXXX</span>
+        </div>
+        <div class="campo">
+          <label for="ocupacion">¿A qué te dedicas actualmente?</label>
+          <select id="ocupacion">
+            <option value="">Selecciona...</option>
+            <option>Estudio, soy estudiante</option>
+            <option>Trabajo en relación de dependencia</option>
+            <option>Trabajo de forma independiente</option>
+            <option>Estoy buscando empleo en tecnología</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primario">Reservar mi cupo por $249.000</button>
+      </form>
+      <div class="seguridad">🔒 Tus datos no se comparten con nadie. Solo los uso para contactarte.</div>
+    </div>
+  </div>
+</section>
+
+<footer class="pie">
+  <div class="contenedor">
+    <p>JS Intensivo · Santiago, Chile · +56 9 9876 5432 · hola@jsintensivo.cl</p>
+    <p><a href="#">Términos</a> · <a href="#">Privacidad</a> · <a href="#">Política de devolución</a></p>
+  </div>
+</footer>
+
+<a href="https://wa.me/56998765432" class="whatsapp" target="_blank" rel="noopener" title="Escríbenos por WhatsApp">💬</a>
+
+<script>
+/* ============================================================
+   JAVASCRIPT — EJEMPLO 2
+   ============================================================ */
+
+/* --- 1. Menú móvil --- */
+const botonMenu = document.getElementById('botonMenu');
+const menu      = document.getElementById('menu');
+botonMenu.addEventListener('click', () => menu.classList.toggle('abierto'));
+menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => menu.classList.remove('abierto')));
+
+/* --- 2. Cuenta regresiva ---
+   Para adaptarlo: cambia 2026-10-06T09:00:00 por la fecha real de tu curso. */
+const fechaCurso = new Date('2026-10-06T09:00:00').getTime();
+
+function actualizarReloj(){
+  const ahora    = new Date().getTime();
+  const faltan   = Math.max(0, fechaCurso - ahora);
+  const segundos = Math.floor(faltan / 1000);
+  const minutos  = Math.floor(segundos / 60);
+  const horas    = Math.floor(minutos / 60);
+  const dias     = Math.floor(horas / 24);
+
+  // El % 60 toma solo el resto (módulo), para que los minutos roten de 0 a 59
+  const dosDigitos = n => String(n).padStart(2,'0');
+
+  document.getElementById('dias').textContent     = dosDigitos(dias);
+  document.getElementById('horas').textContent    = dosDigitos(horas % 24);
+  document.getElementById('minutos').textContent  = dosDigitos(minutos % 60);
+  document.getElementById('segundos').textContent = dosDigitos(segundos % 60);
+}
+actualizarReloj();
+setInterval(actualizarReloj, 1000);   // se actualiza cada segundo
+
+/* --- 3. Barra de cupos con animación --- */
+const cuposTotales    = 15;
+const cuposReservados = 11;        // Cambia este número si se llenan más cupos
+const porcentaje      = (cuposReservados / cuposTotales) * 100;
+
+window.addEventListener('load', () => {
+  setTimeout(() => { document.getElementById('rellenoBarra').style.width = porcentaje + '%'; }, 300);
+});
+document.getElementById('cuposRestantes').textContent = cuposTotales - cuposReservados;
+
+/* --- 4. Preguntas frecuentes (acordeón) --- */
+document.querySelectorAll('.pregunta button').forEach(boton => {
+  boton.addEventListener('click', () => {
+    const bloque = boton.parentElement;
+    const estabaAbierta = bloque.classList.contains('abierta');
+    // Cierra todas
+    document.querySelectorAll('.pregunta').forEach(p => p.classList.remove('abierta'));
+    // Si no estaba abierta, ábrela
+    if (!estabaAbierta) bloque.classList.add('abierta');
+  });
+});
+
+/* --- 5. Validación del formulario --- */
+const formulario = document.getElementById('formulario');
+const mensajeOk  = document.getElementById('mensajeOk');
+
+const regexEmail = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i;
+const regexWsp   = /^\+?56[\s-]?9[\s-]?\d{4}[\s-]?\d{4}$/;
+
+const campos = {
+  nombre:   { input: document.getElementById('nombre'),   valida: v => v.trim().length >= 3 },
+  email:    { input: document.getElementById('email'),    valida: v => regexEmail.test(v.trim()) },
+  whatsapp: { input: document.getElementById('whatsapp'), valida: v => regexWsp.test(v.trim()) }
+};
+
+/* Valida en tiempo real: mientras escribes, se avisa si está bien o mal */
+for (const [nombre, config] of Object.entries(campos)) {
+  const { input, valida } = config;
+  const campo = input.closest('.campo');
+
+  input.addEventListener('blur', () => {
+    if (input.value.trim() === '') return;   // no molestar si está vacío
+    campo.classList.toggle('mostrar-error', !valida(input.value));
+    campo.classList.toggle('correcto', valida(input.value));
+  });
+
+  input.addEventListener('input', () => {
+    if (campo.classList.contains('mostrar-error') && valida(input.value)) {
+      campo.classList.remove('mostrar-error');
+      campo.classList.add('correcto');
+    }
+  });
+}
+
+formulario.addEventListener('submit', evento => {
+  evento.preventDefault();
+  let todoBien = true;
+
+  for (const [nombre, config] of Object.entries(campos)) {
+    const { input, valida } = config;
+    const campo = input.closest('.campo');
+    const ok = valida(input.value);
+    campo.classList.toggle('mostrar-error', !ok);
+    if (!ok) todoBien = false;
+  }
+
+  if (todoBien) {
+    mensajeOk.classList.add('visible');
+    formulario.reset();
+  } else {
+    const primero = formulario.querySelector('.campo.mostrar-error input');
+    if (primero) primero.focus();
+  }
+});
+</script>
+
+</body>
+</html>

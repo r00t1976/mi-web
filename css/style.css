@@ -1,0 +1,693 @@
+/* ============================================================
+   JC.CARVAJAL.DEV — HOJA DE ESTILOS PRINCIPAL
+   ============================================================
+   Este es tu primer sitio con CSS separado del HTML.
+   Eso es exactamente como se hace en un proyecto real.
+
+   CÓMO FUNCIONA:
+   El HTML tiene líneas como:
+       <link rel="stylesheet" href="css/style.css">
+   que le dicen al navegador "busca las reglas acá".
+
+   POR QUÉ SEPARARLO (y no como en los ejemplos):
+   - Cambias un color acá y se actualizan TODAS las páginas
+   - El HTML queda limpio, solo con la estructura
+   - Puedes compartir el estilo entre varios sitios
+
+   CÓMO EDITAR LOS COLORES:
+   Baja a la sección :root y cambia los valores. Todo el sitio
+   se repinta. No toques nada más abajo para cambiar el color.
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. VARIABLES
+   Cambia los valores de acá para reestilizar todo el sitio
+   ------------------------------------------------------------ */
+:root{
+  /* --- Colores de marca --- */
+  --primario:      #0f766e;   /* verde azulado, tu color principal */
+  --primario-osc:  #0b5c55;
+  --primario-claro:#14b8a6;
+  --acento:        #f59e0b;   /* ámbar, para destacar precios y CTAs */
+
+  /* --- Colores de texto y fondo --- */
+  --texto:         #1a1f26;
+  --texto-medio:   #52606d;
+  --texto-claro:   #7b8794;
+  --fondo:         #ffffff;
+  --fondo-alt:     #f7faf9;
+  --fondo-osc:     #0d1b1a;
+  --borde:         #e2e8f0;
+  --borde-claro:   #cbd5e1;
+
+  /* --- Tipografía --- */
+  --fuente: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+            "Helvetica Neue", Arial, sans-serif;
+  --fuente-mono: "SF Mono", "Fira Code", Consolas, monospace;
+
+  /* --- Tamaños y formas --- */
+  --max: 1140px;
+  --radio: 10px;
+  --radio-chico: 6px;
+  --sombra: 0 2px 8px rgba(15, 118, 110, .08);
+  --sombra-media: 0 8px 26px rgba(15, 118, 110, .12);
+  --sombra-grande: 0 16px 48px rgba(15, 118, 110, .16);
+  --transicion: .22s ease;
+}
+
+/* ------------------------------------------------------------
+   2. RESET Y BASE
+   ------------------------------------------------------------ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+html{
+  scroll-behavior:smooth;
+  scroll-padding-top:80px;
+  -webkit-text-size-adjust:100%;
+}
+
+body{
+  font-family:var(--fuente);
+  color:var(--texto);
+  line-height:1.65;
+  background:var(--fondo);
+  overflow-x:hidden;
+}
+
+img{max-width:100%;display:block}
+a{color:var(--primario);text-decoration:none;transition:color var(--transicion)}
+a:hover{color:var(--primario-osc)}
+ul{list-style:none}
+button{font-family:inherit}
+
+/* Foco visible para navegación con teclado.
+   Si lo quitas, alguien que navega con teclado se pierde. */
+:focus-visible{
+  outline:3px solid var(--primario-claro);
+  outline-offset:2px;
+  border-radius:3px;
+}
+
+.contenedor{
+  width:100%;
+  max-width:var(--max);
+  margin-inline:auto;
+  padding-inline:22px;
+}
+
+.seccion{padding:78px 0}
+.seccion.oscura{background:var(--fondo-alt)}
+
+.centrado{text-align:center}
+
+/* Salta este enlace al presionar Tab: lo usan las personas
+   que navegan con lector de pantalla. */
+.saltar-enlace{
+  position:absolute;left:-9999px;top:0;z-index:999;
+  background:var(--primario);color:#fff;padding:12px 20px;
+  border-radius:0 0 var(--radio) 0;
+}
+.saltar-enlace:focus{left:0;color:#fff}
+
+/* ------------------------------------------------------------
+   3. CABECERA Y NAVEGACIÓN
+   ------------------------------------------------------------ */
+.cabecera{
+  position:sticky;top:0;z-index:100;
+  background:rgba(255,255,255,.94);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--borde);
+}
+.cabecera .contenedor{
+  display:flex;align-items:center;justify-content:space-between;
+  min-height:72px;gap:20px;
+}
+
+.logo{
+  font-size:19px;font-weight:800;letter-spacing:-.4px;
+  color:var(--texto);white-space:nowrap;
+}
+.logo span{color:var(--primario)}
+.logo .punto{color:var(--acento)}
+
+.nav{display:flex;align-items:center;gap:28px}
+.nav a{
+  color:var(--texto-medio);font-size:15px;font-weight:500;
+  position:relative;padding:4px 0;
+}
+.nav a::after{
+  content:"";position:absolute;left:0;bottom:0;
+  width:0;height:2px;background:var(--primario);
+  transition:width var(--transicion);
+}
+.nav a:hover{color:var(--primario)}
+.nav a:hover::after{width:100%}
+.nav a.activo{color:var(--primario);font-weight:600}
+.nav a.activo::after{width:100%}
+
+.boton-menu{
+  display:none;background:none;border:none;
+  font-size:26px;cursor:pointer;color:var(--texto);
+  padding:4px 8px;line-height:1;
+}
+
+/* ------------------------------------------------------------
+   4. BOTONES
+   ------------------------------------------------------------ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:13px 26px;border:none;border-radius:var(--radio);
+  font-size:15px;font-weight:600;cursor:pointer;
+  font-family:inherit;transition:all var(--transicion);
+  text-align:center;
+}
+.btn-primario{background:var(--primario);color:#fff}
+.btn-primario:hover{
+  background:var(--primario-osc);color:#fff;
+  transform:translateY(-2px);box-shadow:var(--sombra-media);
+}
+.btn-acento{background:var(--acento);color:#3d2b00}
+.btn-acento:hover{
+  background:#d97706;color:#3d2b00;
+  transform:translateY(-2px);box-shadow:var(--sombra-media);
+}
+.btn-linea{
+  background:transparent;color:var(--primario);
+  border:1.5px solid var(--primario);
+}
+.btn-linea:hover{background:var(--primario);color:#fff}
+.btn-blanco{background:#fff;color:var(--primario)}
+.btn-blanco:hover{
+  background:var(--fondo-alt);color:var(--primario-osc);
+  transform:translateY(-2px);
+}
+
+/* ------------------------------------------------------------
+   5. PORTADA (HERO)
+   ------------------------------------------------------------ */
+.hero{
+  position:relative;overflow:hidden;
+  background:
+    radial-gradient(circle at 12% 18%, rgba(20,184,166,.20), transparent 42%),
+    radial-gradient(circle at 88% 82%, rgba(245,158,11,.13), transparent 45%),
+    linear-gradient(160deg, #0d1b1a 0%, #0f2a28 100%);
+  color:#fff;padding:96px 0 88px;
+}
+.hero .contenedor{
+  display:grid;grid-template-columns:1.25fr .75fr;
+  gap:52px;align-items:center;
+}
+.hero .saludo{
+  font-size:14px;font-weight:600;letter-spacing:2.5px;
+  text-transform:uppercase;color:var(--primario-claro);
+  margin-bottom:16px;
+}
+.hero h1{
+  font-size:44px;line-height:1.14;letter-spacing:-1.4px;
+  margin-bottom:8px;font-weight:800;
+}
+.hero h1 .destacado{
+  color:var(--primario-claro);
+  display:block;
+}
+.hero .bajada{
+  font-size:18px;color:#c7d8d6;margin-bottom:14px;font-weight:500;
+}
+.hero .puesto{
+  font-size:15px;color:#8fa8a5;margin-bottom:30px;
+  display:flex;align-items:center;gap:9px;flex-wrap:wrap;
+}
+.hero .punto-sep{width:4px;height:4px;border-radius:50%;background:#4d6b68}
+.hero .botones{display:flex;gap:13px;flex-wrap:wrap}
+.hero .nota{
+  margin-top:26px;font-size:13.5px;color:#7d9694;
+  display:flex;align-items:center;gap:7px;
+}
+
+/* Tarjeta del lado derecho */
+.hero .tarjeta-lateral{
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.13);
+  border-radius:16px;padding:28px 26px;
+  backdrop-filter:blur(6px);
+}
+.hero .tarjeta-lateral h2{
+  font-size:12px;text-transform:uppercase;letter-spacing:1.6px;
+  color:var(--primario-claro);margin-bottom:18px;font-weight:700;
+}
+.hero .dato{
+  display:flex;justify-content:space-between;align-items:baseline;
+  padding:11px 0;border-bottom:1px solid rgba(255,255,255,.10);
+  font-size:14.5px;
+}
+.hero .dato:last-of-type{border-bottom:none}
+.hero .dato .etq{color:#9db4b1}
+.hero .dato .val{font-weight:700;font-size:17px}
+
+/* ------------------------------------------------------------
+   6. TÍTULOS DE SECCIÓN
+   ------------------------------------------------------------ */
+.encabezado-seccion{
+  max-width:680px;margin-bottom:46px;
+}
+.encabezado-seccion.centrado{margin-inline:auto;text-align:center}
+.encabezado-seccion .sobre-linea{
+  font-size:12.5px;font-weight:700;letter-spacing:2px;
+  text-transform:uppercase;color:var(--primario);
+  margin-bottom:11px;
+}
+.encabezado-seccion h2{
+  font-size:34px;line-height:1.22;letter-spacing:-.9px;
+  margin-bottom:12px;font-weight:800;
+}
+.encabezado-seccion p{
+  font-size:17px;color:var(--texto-medio);
+}
+
+/* ------------------------------------------------------------
+   7. SERVICIOS / PAQUETES
+   ------------------------------------------------------------ */
+.rejilla-servicios{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(288px,1fr));
+  gap:24px;
+}
+.servicio{
+  background:var(--fondo);border:1px solid var(--borde);
+  border-radius:14px;padding:30px 26px;
+  display:flex;flex-direction:column;
+  transition:all var(--transicion);position:relative;
+}
+.servicio:hover{
+  transform:translateY(-5px);
+  box-shadow:var(--sombra-media);
+  border-color:var(--primario-claro);
+}
+.servicio .num-top{
+  font-family:var(--fuente-mono);font-size:12px;font-weight:700;
+  color:var(--primario-claro);letter-spacing:1px;margin-bottom:14px;
+}
+.servicio .icono{
+  width:50px;height:50px;border-radius:12px;
+  background:linear-gradient(135deg,var(--primario),var(--primario-claro));
+  color:#fff;display:flex;align-items:center;justify-content:center;
+  font-size:24px;margin-bottom:18px;
+}
+.servicio h3{font-size:20px;margin-bottom:6px;font-weight:700}
+.servicio .sub{
+  font-size:13px;color:var(--texto-claro);margin-bottom:16px;
+  font-family:var(--fuente-mono);
+}
+.servicio .precio{
+  font-size:34px;font-weight:800;color:var(--primario);
+  margin-bottom:4px;letter-spacing:-1px;
+}
+.servicio .precio small{
+  font-size:13px;font-weight:500;color:var(--texto-claro);
+  letter-spacing:0;display:block;margin-top:2px;
+}
+.servicio ul{margin:20px 0 24px;flex:1}
+.servicio ul li{
+  font-size:14.5px;color:var(--texto-medio);
+  padding:8px 0;border-bottom:1px solid var(--borde);
+  display:flex;gap:10px;align-items:flex-start;
+}
+.servicio ul li:last-child{border-bottom:none}
+.servicio ul li::before{
+  content:"✓";color:var(--primario);font-weight:800;flex-shrink:0;
+}
+.servicio .btn{width:100%}
+
+.insignia-popular{
+  position:absolute;top:-11px;right:22px;
+  background:var(--acento);color:#3d2b00;
+  padding:5px 14px;border-radius:20px;
+  font-size:11.5px;font-weight:800;letter-spacing:.5px;
+}
+
+/* ------------------------------------------------------------
+   8. PROYECTOS
+   ------------------------------------------------------------ */
+.rejilla-proyectos{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:26px;
+}
+.proyecto{
+  background:var(--fondo);border:1px solid var(--borde);
+  border-radius:14px;overflow:hidden;
+  display:flex;flex-direction:column;
+  transition:all var(--transicion);
+}
+.proyecto:hover{
+  transform:translateY(-5px);
+  box-shadow:var(--sombra-grande);
+  border-color:var(--primario-claro);
+}
+.proyecto .miniatura{
+  aspect-ratio:16/10;position:relative;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+  font-size:54px;
+}
+.proyecto .miniatura .capa{
+  position:absolute;inset:0;
+  background:rgba(13,27,26,.72);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;transition:opacity var(--transicion);
+}
+.proyecto:hover .miniatura .capa{opacity:1}
+.proyecto .miniatura .capa span{
+  color:#fff;font-weight:700;font-size:15px;
+  border-bottom:2px solid var(--acento);padding-bottom:3px;
+}
+.proyecto .etiquetas{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.proyecto .etiqueta{
+  font-size:11px;font-weight:700;letter-spacing:.4px;
+  padding:3px 10px;border-radius:20px;
+  background:var(--fondo-alt);color:var(--primario);
+  border:1px solid var(--borde);
+}
+.proyecto .cuerpo{padding:22px 22px 24px;flex:1;display:flex;flex-direction:column}
+.proyecto h3{font-size:19px;margin-bottom:7px;font-weight:700}
+.proyecto p{font-size:14.5px;color:var(--texto-medio);margin-bottom:14px;flex:1}
+.proyecto .tecnologias{
+  display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;
+  font-family:var(--fuente-mono);font-size:11.5px;
+}
+.proyecto .tecnologias span{
+  padding:3px 9px;border-radius:5px;
+  background:var(--fondo-alt);color:var(--texto-medio);
+}
+.proyecto .enlaces{display:flex;gap:16px;align-items:center}
+.proyecto .ver{
+  font-size:14.5px;font-weight:700;color:var(--primario);
+  display:inline-flex;align-items:center;gap:6px;
+}
+.proyecto .ver:hover{gap:10px}
+.proyecto .ver:focus-visible{gap:10px}
+
+/* ------------------------------------------------------------
+   9. SOBRE MÍ
+   ------------------------------------------------------------ */
+.sobre-mi .contenedor{
+  display:grid;grid-template-columns:.8fr 1.2fr;
+  gap:52px;align-items:start;
+}
+.sobre-mi .foto-area{
+  background:linear-gradient(150deg,var(--primario),var(--primario-osc));
+  border-radius:16px;aspect-ratio:4/5;
+  display:flex;align-items:center;justify-content:center;
+  font-size:82px;font-weight:800;color:#fff;
+  position:relative;overflow:hidden;
+}
+.sobre-mi .foto-area::after{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at 30% 20%,rgba(255,255,255,.16),transparent 60%);
+}
+.sobre-mi .iniciales{
+  position:relative;z-index:1;letter-spacing:-2px;
+}
+.sobre-mi .texto p{margin-bottom:16px;color:var(--texto-medio);font-size:16.5px}
+.sobre-mi .texto p:last-of-type{margin-bottom:26px}
+.sobre-mi .texto strong{color:var(--texto);font-weight:600}
+
+.habilidades{display:grid;gap:14px;margin-top:30px}
+.habilidad .nombre{
+  display:flex;justify-content:space-between;
+  font-size:14px;font-weight:600;margin-bottom:6px;
+}
+.habilidad .nombre .nivel{color:var(--texto-claro);font-weight:500}
+.habilidad .barra-fondo{
+  height:7px;background:var(--borde);border-radius:4px;overflow:hidden;
+}
+.habilidad .barra{
+  height:100%;border-radius:4px;
+  background:linear-gradient(90deg,var(--primario),var(--primario-claro));
+  width:0;transition:width 1.2s ease;
+}
+
+.linea-tiempo{
+  border-left:2px solid var(--borde);
+  padding-left:24px;margin-top:26px;
+}
+.hito{position:relative;padding-bottom:24px}
+.hito:last-child{padding-bottom:0}
+.hito::before{
+  content:"";position:absolute;left:-31px;top:6px;
+  width:12px;height:12px;border-radius:50%;
+  background:var(--primario);border:2px solid #fff;
+  box-shadow:0 0 0 2px var(--primario);
+}
+.hito .anio{
+  font-family:var(--fuente-mono);font-size:12.5px;font-weight:700;
+  color:var(--primario);margin-bottom:4px;
+}
+.hito h4{font-size:16.5px;margin-bottom:4px;font-weight:700}
+.hito p{font-size:14.5px;color:var(--texto-medio);margin:0}
+
+/* ------------------------------------------------------------
+   10. PROCESO
+   ------------------------------------------------------------ */
+.rejilla-proceso{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:28px;
+}
+.paso-proceso{position:relative}
+.paso-proceso .num{
+  width:46px;height:46px;border-radius:50%;
+  background:linear-gradient(135deg,var(--primario),var(--primario-claro));
+  color:#fff;display:flex;align-items:center;justify-content:center;
+  font-size:18px;font-weight:800;margin-bottom:16px;
+}
+.paso-proceso h3{font-size:17.5px;margin-bottom:7px;font-weight:700}
+.paso-proceso p{font-size:14.5px;color:var(--texto-medio);margin:0}
+.paso-proceso::after{
+  content:"";position:absolute;top:23px;left:58px;right:-14px;
+  height:1px;background:var(--borde);
+}
+.paso-proceso:last-child::after{display:none}
+
+/* ------------------------------------------------------------
+   11. CONTACTO
+   ------------------------------------------------------------ */
+.contacto{background:var(--fondo-osc);color:#fff;padding:78px 0}
+.contacto .encabezado-seccion h2{color:#fff}
+.contacto .encabezado-seccion p{color:#9db4b1}
+.contacto .encabezado-seccion .sobre-linea{color:var(--primario-claro)}
+
+.contacto .layout{
+  display:grid;grid-template-columns:1fr 1.15fr;
+  gap:44px;align-items:start;
+}
+
+.info-contacto .dato{
+  display:flex;gap:15px;margin-bottom:24px;align-items:flex-start;
+}
+.info-contacto .dato .icono{
+  width:44px;height:44px;border-radius:11px;flex-shrink:0;
+  background:rgba(20,184,166,.14);color:var(--primario-claro);
+  display:flex;align-items:center;justify-content:center;font-size:20px;
+}
+.info-contacto .dato h4{font-size:15.5px;margin-bottom:3px;color:#fff;font-weight:600}
+.info-contacto .dato p,.info-contacto .dato a{
+  color:#9db4b1;font-size:15px;margin:0;
+}
+.info-contacto .dato a:hover{color:var(--primario-claro)}
+
+.info-contacto .disponibilidad{
+  background:rgba(20,184,166,.10);
+  border:1px solid rgba(20,184,166,.28);
+  border-radius:var(--radio);padding:15px 17px;
+  font-size:14.5px;color:#b7d3d0;margin-top:30px;
+  display:flex;align-items:center;gap:11px;
+}
+.info-contacto .disponibilidad .punto{
+  width:9px;height:9px;border-radius:50%;background:#4ade80;
+  flex-shrink:0;box-shadow:0 0 0 3px rgba(74,222,128,.22);
+  animation:latir 2s infinite;
+}
+@keyframes latir{
+  0%,100%{box-shadow:0 0 0 3px rgba(74,222,128,.22)}
+  50%{box-shadow:0 0 0 7px rgba(74,222,128,.05)}
+}
+
+.formulario{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.11);
+  border-radius:16px;padding:30px;
+}
+.campo{margin-bottom:17px}
+.campo label{
+  display:block;font-size:13.5px;font-weight:600;
+  margin-bottom:7px;color:#d5e3e1;
+}
+.campo .requerido{color:var(--acento);margin-left:3px}
+.campo input,.campo select,.campo textarea{
+  width:100%;padding:12px 14px;
+  background:rgba(255,255,255,.06);
+  border:1.5px solid rgba(255,255,255,.14);
+  border-radius:var(--radio-chico);
+  color:#fff;font-size:15.5px;font-family:inherit;
+  transition:border-color var(--transicion),background var(--transicion);
+}
+.campo input::placeholder,.campo textarea::placeholder{color:#6d8885}
+.campo input:focus,.campo select:focus,.campo textarea:focus{
+  outline:none;border-color:var(--primario-claro);
+  background:rgba(255,255,255,.09);
+}
+.campo select option{background:#0d1b1a;color:#fff}
+.campo textarea{resize:vertical;min-height:118px}
+.campo input.mal,.campo select.mal,.campo textarea.mal{
+  border-color:#f87171;background:rgba(248,113,113,.08);
+}
+.campo .error{
+  color:#fca5a5;font-size:13px;margin-top:5px;display:none;
+}
+.campo.mostrar-error .error{display:block}
+.campo-doble{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+.formulario button[type=submit]{
+  width:100%;margin-top:6px;
+  background:var(--primario-claro);color:#06231f;
+  padding:15px;border:none;border-radius:var(--radio);
+  font-size:16px;font-weight:700;cursor:pointer;
+  font-family:inherit;transition:all var(--transicion);
+}
+.formulario button[type=submit]:hover{
+  background:#2dd4bf;transform:translateY(-2px);
+}
+.formulario button[type=submit]:disabled{opacity:.6;cursor:not-allowed;transform:none}
+
+.mensaje-enviado{
+  display:none;background:rgba(74,222,128,.14);
+  border:1px solid rgba(74,222,128,.38);
+  color:#a7f3d0;padding:15px 17px;border-radius:var(--radio);
+  margin-bottom:20px;font-size:14.5px;font-weight:500;
+}
+.mensaje-enviado.visible{display:block;animation:entrar .3s ease}
+@keyframes entrar{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+
+.aviso-privacidad{
+  font-size:12.5px;color:#6d8885;margin-top:16px;
+  display:flex;gap:8px;align-items:flex-start;line-height:1.55;
+}
+
+/* ------------------------------------------------------------
+   12. WHATSAPP FLOTANTE
+   ------------------------------------------------------------ */
+.whatsapp-flotante{
+  position:fixed;bottom:24px;right:24px;z-index:200;
+  width:56px;height:56px;border-radius:50%;
+  background:#25d366;color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:27px;box-shadow:0 6px 20px rgba(37,211,102,.42);
+  transition:transform var(--transicion);
+}
+.whatsapp-flotante:hover{
+  transform:scale(1.08);color:#fff;
+}
+
+/* ------------------------------------------------------------
+   13. PIE DE PÁGINA
+   ------------------------------------------------------------ */
+.pie{
+  background:#08110f;color:#7d9694;
+  padding:44px 0 26px;font-size:14px;
+}
+.pie .rejilla{
+  display:grid;grid-template-columns:1.8fr 1fr 1fr;
+  gap:38px;margin-bottom:32px;
+}
+.pie h4{
+  color:#fff;font-size:14.5px;margin-bottom:14px;font-weight:600;
+}
+.pie a{color:#7d9694;display:block;padding:5px 0;font-size:14px}
+.pie a:hover{color:var(--primario-claro)}
+.pie .sobre-firma p{color:#7d9694;max-width:340px;line-height:1.7}
+.pie .firma-logo{
+  font-size:17px;font-weight:800;color:#fff;margin-bottom:10px;
+}
+.pie .firma-logo span{color:var(--primario-claro)}
+.pie .abajo{
+  border-top:1px solid rgba(255,255,255,.08);
+  padding-top:20px;display:flex;justify-content:space-between;
+  flex-wrap:wrap;gap:10px;font-size:13px;color:#5f7a78;
+}
+.pie .abajo a{color:#5f7a78;display:inline;padding:0}
+.pie .abajo a:hover{color:var(--primario-claro)}
+
+/* ------------------------------------------------------------
+   14. ANIMACIONES AL HACER SCROLL
+   Se activan desde js/main.js con la clase .visible
+   ------------------------------------------------------------ */
+.revelar{
+  opacity:0;transform:translateY(26px);
+  transition:opacity .6s ease,transform .6s ease;
+}
+.revelar.visible{opacity:1;transform:none}
+
+.revelar.atras-izq{transform:translateX(-30px)}
+.revelar.atras-der{transform:translateX(30px)}
+
+/* Respeta la preferencia del sistema de reducir movimiento.
+   Si alguien pide menos animación en su sistema, la apagamos. */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+    scroll-behavior:auto !important;
+  }
+  .revelar{opacity:1;transform:none}
+}
+
+/* ------------------------------------------------------------
+   15. RESPONSIVO
+   ------------------------------------------------------------ */
+@media (max-width:1000px){
+  .hero .contenedor{grid-template-columns:1fr;gap:38px}
+  .hero h1{font-size:38px}
+  .sobre-mi .contenedor{grid-template-columns:1fr;gap:32px}
+  .sobre-mi .foto-area{max-width:280px;aspect-ratio:1/1}
+  .contacto .layout{grid-template-columns:1fr;gap:34px}
+}
+
+@media (max-width:860px){
+  .boton-menu{display:block}
+  .nav{
+    position:absolute;top:72px;left:0;right:0;
+    background:#fff;flex-direction:column;gap:0;
+    align-items:stretch;padding:8px 0;
+    max-height:0;overflow:hidden;
+    transition:max-height .3s ease;
+    border-bottom:1px solid var(--borde);
+    box-shadow:0 10px 22px rgba(0,0,0,.07);
+  }
+  .nav.abierto{max-height:400px}
+  .nav a{padding:14px 22px;border-bottom:1px solid var(--fondo-alt)}
+  .nav a::after{display:none}
+  .nav .btn{margin:12px 22px}
+
+  .pie .rejilla{grid-template-columns:1fr 1fr;gap:28px}
+  .paso-proceso::after{display:none}
+}
+
+@media (max-width:620px){
+  .seccion{padding:56px 0}
+  .hero{padding:64px 0 60px}
+  .hero h1{font-size:31px;letter-spacing:-.8px}
+  .hero .bajada{font-size:16px}
+  .hero .botones{flex-direction:column;align-items:stretch}
+  .hero .botones .btn{width:100%}
+  .encabezado-seccion h2{font-size:27px}
+  .servicio .precio{font-size:29px}
+  .campo-doble{grid-template-columns:1fr}
+  .formulario{padding:22px 18px}
+  .rejilla-servicios{grid-template-columns:1fr}
+  .pie .rejilla{grid-template-columns:1fr;gap:24px}
+  .whatsapp-flotante{width:52px;height:52px;font-size:24px;bottom:18px;right:18px}
+  .revelar.atras-izq,.revelar.atras-der{transform:translateY(26px)}
+}
+
+@media (max-width:400px){
+  .rejilla-proyectos{grid-template-columns:1fr}
+  .servicio{padding:24px 20px}
+}
