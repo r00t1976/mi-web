@@ -124,8 +124,8 @@ button{font-family:inherit}
 }
 
 .logo{
-  font-size:19px;font-weight:800;letter-spacing:-.4px;
-  color:var(--texto);white-space:nowrap;
+  font-size:24px;font-weight:800;letter-spacing:-.4px;
+  color:#ffffff;white-space:nowrap;
 }
 .logo span{color:var(--primario)}
 .logo .punto{color:var(--acento)}
@@ -470,7 +470,7 @@ button{font-family:inherit}
    ------------------------------------------------------------ */
 .contacto{background:var(--fondo-osc);color:#fff;padding:78px 0}
 .contacto .encabezado-seccion h2{color:#fff}
-.contacto .encabezado-seccion p{color:#9db4b1}
+.contacto .encabezado-seccion p{color:#8a8f8d}
 .contacto .encabezado-seccion .sobre-linea{color:var(--primario-claro)}
 
 .contacto .layout{
