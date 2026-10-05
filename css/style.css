@@ -35,10 +35,10 @@
   --texto-medio:   #52606d;
   --texto-claro:   #7b8794;
   --fondo:         #889090;
-  --fondo-alt:     #f7faf9;
+  --fondo-alt:     #242525;
   --fondo-osc:     #0d1b1a;
-  --borde:         #e2e8f0;
-  --borde-claro:   #cbd5e1;
+  --borde:         #5d4d8d;
+  --borde-claro:   #635693;
 
   /* --- Tipografía --- */
   --fuente: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
@@ -104,17 +104,17 @@ button{font-family:inherit}
    que navegan con lector de pantalla. */
 .saltar-enlace{
   position:absolute;left:-9999px;top:0;z-index:999;
-  background:var(--primario);color:#fff;padding:12px 20px;
+  background:var(--primario);color:#1d1b1b;padding:12px 20px;
   border-radius:0 0 var(--radio) 0;
 }
-.saltar-enlace:focus{left:0;color:#fff}
+.saltar-enlace:focus{left:0;color:#151414}
 
 /* ------------------------------------------------------------
    3. CABECERA Y NAVEGACIÓN
    ------------------------------------------------------------ */
 .cabecera{
   position:sticky;top:0;z-index:100;
-  background:rgba(255,255,255,.94);
+  background:rgba(21, 20, 20, 0.94);
   backdrop-filter:blur(10px);
   border-bottom:1px solid var(--borde);
 }
