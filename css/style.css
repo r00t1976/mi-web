@@ -163,12 +163,15 @@ button{font-family:inherit}
 }
 .btn-primario{background:var(--primario);color:#fff}
 .btn-primario:hover{
-  background:var(--primario-osc);color:#fff;
+  background:var(--primario-osc);color:#cf9115;
   transform:translateY(-2px);box-shadow:var(--sombra-media);
 }
-.btn-acento{background:var(--acento);color:#3d2b00}
+ /* Botón Contacto de la cabecera */
+.cabecera .btn-primario{background:var(--acento);color:hsl(0, 4%, 5%)}
+
+.btn-acento{background:var(--acento);color:#121110}
 .btn-acento:hover{
-  background:#d97706;color:#3d2b00;
+  background:#7e592f;color:#3d2b00;
   transform:translateY(-2px);box-shadow:var(--sombra-media);
 }
 .btn-linea{
