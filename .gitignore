@@ -1,0 +1,14 @@
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+*.log
+
+# Entorno y secretos
+.env
+.env.*
+
+# Dependencias
+node_modules/
